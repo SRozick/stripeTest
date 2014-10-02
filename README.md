@@ -1,4 +1,5 @@
 ## Stripe Test
+
 This is a test deployment that creates a new Rails app and gets a test Stripe application up and running.
 
 The primary goal of this is to document the required steps to:
