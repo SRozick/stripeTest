@@ -62,6 +62,30 @@ This will rely heavily on tutorials from Hartl, RailsCasts, RailsGirls, and Stri
 
 ### Other Useful Notes
 
+##### Capybara
+
+Capybara simulates how a real-world user is going to interact with the application, for example, by filling in forms or clicking objects.  Capybara is part of the guard/rspec test environment.
+
+##### Factory\_girl_rails
+
+Factory Girl generates objects for purposes of testing.  It helps maintain DRY test code by consolidating test objects into a single location and configuration that can be called when required and in quantities as required.  This is part of the guard/rspec test environment.
+
+##### Faker
+
+Faker generates fake name and address data (and passwords, products, etc) for purposes of more advanced testing.  When tests require a variety of different data, faker generates the data for the tests.  
+
+Faker is also useful for generating screenshots and demonstration platforms, when real customer data isn't available or shouldn't be compromised.
+
+##### Guard-spec
+
+Part of the Guard suite of management tools, guard-rspec provides Guard functionality to rspec files and tests.  Basically this means that Guard will watch in the background and when a test file changes, Guard will automatically re-run the associated tests.  The developer receives a flag when tests pass or fail and does not have to pause development activity to test.
+
+The advantage of this is that tests run faster by not having to pre-load the environment each time; the test environment is maintained as development continues.  Tests run in the background and output is fed to various   
+
+##### Launchy
+
+Launchy launches a browser instance for testing purposes when required.  Launchy is part of the guard/rspec test environment.
+
 ##### Nodejs
 
 Nodejs and therubyracer gems are both javascript runtime environments that permit the server to run javascript applications and return the results to Ruby/ Rails when required.  They allow advanced linking between the client and browser, and when properly used, result in faster client response with lower server loading.
@@ -72,6 +96,15 @@ Using nodejs involves requiring the execjs gem and modifying `config/boot.rb` fi
 
 To be clear, there is no particular preference other than consistency at this stage, to use nodejs, therubyracer, or therubyrhino gems.
 
+##### Rspec-rails
+
+Rspec-rails provides the testing framework for all tests that will be run.  It is supported by guard-rspec, factory\_girl_rails, and spring-commands-rspec. 
+
+Rspec allows for Behaviour Driven Development (BDD) in Rails applications.  The stripeTest rspec suite will begin with a full set of feature tests.  These serve to 1) Validate stripeTest is behaving as expected, 2) illustrate features and behaviour of stripeTest by way of internal documentation, and 3) document the extent to which the code is already tested.
+
+##### Spring-commands-rspec
+
+Integrates spring and rspec.
 
 ##### Turbolinks
 
