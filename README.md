@@ -22,6 +22,8 @@ This will rely heavily on tutorials from Hartl, RailsCasts, RailsGirls, and Stri
 1. Rails is installed - [instructions](https://github.com/SRozick/middleman-foundation-min/wiki/Installing-and-Configuring-Rails "Installing Rails Wiki")
 1. RVM is being used as gemset version control- [instructions](https://github.com/SRozick/middleman-foundation-min/wiki/Welcome-to-the-middleman-foundation-min-wiki! "Installing Rails Wiki")
 1. Postgres is installed and setup - [instructions](https://github.com/SRozick/middleman-foundation-min/wiki/Welcome-to-the-middleman-foundation-min-wiki! "Installing Rails Wiki")
+  1. gem install pg 
+  1. PGadmin is installed and set up - [pgadmin](http://www.pgadmin.org) 
 
 ### Cloning instructions
 1. `$ git clone git@github.com:SRozick/stripeTest.git`
@@ -29,7 +31,12 @@ This will rely heavily on tutorials from Hartl, RailsCasts, RailsGirls, and Stri
 3. `$ rvm gemset use <rails_ver>@stripeTest --create`
 1. Edit config/database.yml
   1. Copy config/database.yml.sample and rename to config/database.yml (database.yml is ignored by git)  
-  1. In database.yml: `default:`, add `username:<local_username>`
+  1. In database.yml: `default:`, add `username:<local_username
+1. `$ bundle install`
+2. `$ bundle update`
+3. `$ rake db:create`
+4. `$ rails s`
+  1. Observe smoke test page in browser at localhost:3000 :-) 
 
 ### Steps to create
 1. `$ rails new <project_name> --database=postgresql`
@@ -47,6 +54,9 @@ This will rely heavily on tutorials from Hartl, RailsCasts, RailsGirls, and Stri
   1. Copy database.yml and rename to database.yml.sample (database.yml will be ignored by git)  
   1. Under `default:`, add `username:<local_username>`
   1. Under `development:` and under `test:`, remove or comment out `username:<value>`
+1. Create basic product inventory as Widgets
+  1. `$ rails generate scaffold widgets name:string description:text picture:integer price:decimal`
+1. Create basic test suite
 
 ### Troubleshooting
 
