@@ -39,7 +39,7 @@ This will rely heavily on tutorials from Hartl, RailsCasts, RailsGirls, and Stri
   1. Observe smoke test page in browser at localhost:3000 :-) 
 
 ### Steps to create
-1. `$ rails new <project_name> --database=postgresql`
+1. `$ rails new <project_name> --database=postgresql --no-test-framework`
 1. `$ cd <project_name>`
 1. `$ subl .`
 1. `$ rvm gemset use <rails_ver>@<project_name> --create
@@ -47,19 +47,64 @@ This will rely heavily on tutorials from Hartl, RailsCasts, RailsGirls, and Stri
   1. All of the following steps can be implemented using a template or by modifying the `rails new` generator process.
   1. Comment out turbolinks.  [Why?](https://github.com/SRozick/stripeTest/blob/master/README.md#turbolinks)
   1. Replace rubyracer with execjs.  [Why?](https://github.com/SRozick/stripeTest/blob/master/README.md#nodejs)
-    1. In Gemfile:  `gem execjs`
-    2. In config/boot.rb: `ENV['EXECJS_RUNTIME'] = 'Node'` OR [see here](http://ajacevedo.com/2013/using-node-js-as-a-rails-javascript-runtime/) for alternative method.
+    1. In `Gemfile`:  `gem execjs`
+    1. In `config/boot.rb`: `ENV['EXECJS_RUNTIME'] = 'Node'` OR [see here](http://ajacevedo.com/2013/using-node-js-as-a-rails-javascript-runtime/) for alternative method.
   1. Remove remaining comments (to avoid clutter)
 1. Edit config/database.yml
   1. Copy database.yml and rename to database.yml.sample (database.yml will be ignored by git)  
   1. Under `default:`, add `username:<local_username>`
   1. Under `development:` and under `test:`, remove or comment out `username:<value>`
 1. Create basic product inventory as Widgets
-  1. `$ rails generate scaffold widgets name:string description:text picture:integer price:decimal`
+          
+        $ rails generate scaffold widgets name:string description:text 
+          picture:integer price:decimal
+          
+          # note there should not be a line break
+
 1. Create basic test suite
+  1. Add required gems to `Gemfile` 
+              
+          group :development, :test do
+            gem 'spring-commands-rspec'
+            gem 'rspec-rails'
+            gem 'guard-rspec'
+            gem 'factory\_girl_rails'
+            gem 'faker'
+            gem 'capybara'
+          end
 
+          group :test do
+            gem 'launchy'
+          end
+  1. `$ bundle`
+  1. `rails generate rspec:install`
+  1. Edit `spec/spec_helper`:
+    1. Add the following at the top of the file:
+
+            require "capybara/rspec"
+            require "rails_helper"
+    1. Remove `=begin` from around line 45 and `=end` from around line 86  
+      (We want to use recommended settings).
+    1. Comment out `config.profile_examples = 10` around line 71  
+      (For short tests this becomes too verbose to easily see results).
+    1. Comment out `config.disable_monkey_patching!` around line 56  
+      (This seems to break the standard-ish `describe` syntax).
+  1. `$ mkdir spec/models`
+  1. Create file `widget_spec.rb`:
+
+            require 'spec_helper'
+
+            RSpec.describe Widget do
+              it "has a valid factory"
+              it "is invalid without a name"
+              it "is invalid without a description"
+              it "is invalid without a price"
+              end
+  1. 
+
+---------
 ### Troubleshooting
-
+---------
 ### Other Useful Notes
 
 ##### Capybara
