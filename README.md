@@ -30,7 +30,7 @@ This will rely heavily on tutorials from Hartl, RailsCasts, RailsGirls, and Stri
 1. `$ rvm gemset use <rails_ver>@<project_name> --create
 1. Edit Gemfile
   1. All of the following steps can be implemented using a template or by modifying the `rails new` generator process.
-  1. Comment out turbolinks.  [Why?][1] Argument: Turbolinks can cause issues in page loading and javascript behavior.  If implemented, it should be implemented at the end of the project rather than the beginning.
+  1. Comment out turbolinks.  [Why?](https://github.com/SRozick/stripeTest/blob/master/README.md#turbolinks)
   1. Replace rubyracer with nodejs.  Argument: nodejs is expected to run faster and cleaner in most environments.
   1. Remove remaining comments (to avoid clutter)
 1. Edit config/database.yml
@@ -40,6 +40,14 @@ This will rely heavily on tutorials from Hartl, RailsCasts, RailsGirls, and Stri
 ### Troubleshooting
 
 ### Other Useful Notes
+
+##### Turbolinks
+Turbolinks is a gem designed to improve page load speeds by making the browser reload only the page body elements when a tracked link is clicked.  This has the advantage of effectively force-caching all page support elements, such as CSS files, javascripts, images, etc.  Caching occurs regardless of user settings when Turbolinks is being used, provided the user is allowing Javascripts to run.
+
+While in practice, this does drastically improve page reload speeds and reduce server network loading, it has a number of pitfalls.  Using Turbolinks effectively requires advanced awareness of how the page is going to load.  Otherwise, standard tools like Google Analytics can misbehave, users can have poor experiences as scripts fail to refresh state between page loadings, and other plugins or scripts may fail to operate as desired.
+
+We recommend implementing Turbolinks at the end of a project, and only with careful evaluation of how Turbolinks will affect its tracked links.  Like every tool, Turbolinks has its purpose and can be incredibly beneficial when properly implemented.  Nonetheless, when used improperly, its undesirable effects can far outweigh its benefits.
+[Steps to create](https://github.com/SRozick/stripeTest/blob/master/README.md#steps-to-create)
 
 ## Helpful References
 
