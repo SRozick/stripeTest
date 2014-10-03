@@ -27,11 +27,16 @@ This will rely heavily on tutorials from Hartl, RailsCasts, RailsGirls, and Stri
 
 ### Cloning instructions
 1. `$ git clone git@github.com:SRozick/stripeTest.git`
-2. `$ cd stripeTest.git`
-3. `$ rvm gemset use <rails_ver>@stripeTest --create`
-1. Edit config/database.yml
-  1. Copy config/database.yml.sample and rename to config/database.yml (database.yml is ignored by git)  
-  1. In database.yml: `default:`, add `username:<local_username
+1. `$ cd stripeTest.git`
+1. `$ rvm gemset use <rails_ver>@stripeTest --create`
+1. Copy config/database.yml.sample and rename to config/database.yml (database.yml is ignored by git)  
+  1. In `config/database.yml`: 
+    1. Under `default:`, add `username:<local_username>`
+    1. Under `development:`, `test:`, and `production:`, change `database:` to appropriate database name
+1. Copy config/secrets.yml.sample and rename to config/secrets.yml (secrets.yml is ignored by git)
+  1. In `config/secrets.yml`: 
+    1. Run `rake secret` and insert the results under `development:` 
+    1. Run `rake secret` (again) and insert the results under `test:` 
 1. `$ bundle install`
 2. `$ bundle update`
 3. `$ rake db:create`
@@ -90,16 +95,8 @@ This will rely heavily on tutorials from Hartl, RailsCasts, RailsGirls, and Stri
     1. Comment out `config.disable_monkey_patching!` around line 56  
       (This seems to break the standard-ish `describe` syntax).
   1. `$ mkdir spec/models`
-  1. Create file `widget_spec.rb`:
-
-            require 'spec_helper'
-
-            RSpec.describe Widget do
-              it "has a valid factory"
-              it "is invalid without a name"
-              it "is invalid without a description"
-              it "is invalid without a price"
-              end
+  1. `$ mkdir spec/factories`
+  1. Create file `spec/models/widget_spec.rb`and supporting factory `spec/factories/widgets.rb` (see files)
   1. 
 
 ---------
