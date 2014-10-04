@@ -5,7 +5,7 @@ RSpec.describe Widget do
   it "has a valid factory" do
 
     factory = FactoryGirl.create(:widget) # setup, exercise
-    expect(factory).to be_valid#, lambda { factory.errors.full_messages.join("\n")
+    expect(factory).to be_valid#, lambda { factory.errors.full_messages.join("\n") }
     # TODO What is `lambda { factory.errors.full_messages.join("\n")` doing here and should it be included in other factory-related tests?
 
   end #has a valid factory

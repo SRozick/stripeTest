@@ -9,4 +9,8 @@ FactoryGirl.define do
     f.price{ Faker::Commerce.price }
   end #factory widget
 
+  factory :invalid_widget, parent: :widget do |f|
+    f.name nil
+  end #
+
 end #FactoryGirl
