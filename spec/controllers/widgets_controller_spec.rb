@@ -3,22 +3,23 @@ require 'spec_helper'
 RSpec.describe WidgetsController do
   describe "GET #index" do
 
+    #TODO: Make a blog note about testing index.  Public available examples
+    # do not test for retrieval of the entire index- they test for
+    # retrieval of the most recent record.
+        # describe "GET #index" do
+        #   it "returns an index containing all widgets" do
+        #     widget = Widget.create
+        #     get :index
+        #     expect(assigns(:widgets)).to eq([widget])
+        #   end
+        # end
+    # Replace with:
     it "returns an index containing all widgets" do
       widget = FactoryGirl.create(:widget)
       other_widget = FactoryGirl.create(:widget)
       get :index
       expect(assigns(:widgets)).to include(widget)
     end #case populates widgets
-    #TODO: Make a blog note about testing index.  Public available examples
-    # do not test for retrieval of the entire index- they test for
-    # retrieval of the most recent record.
-        # describe "GET #index" do
-        #   it "returns an index containing all widgets" do
-        #     team = Widget.create
-        #     get :index
-        #     expect(assigns(:widgets)).to eq([widget])
-        #   end
-        # end
 
     it "renders the :index view" do
       get :index
