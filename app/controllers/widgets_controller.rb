@@ -10,6 +10,10 @@ class WidgetsController < ApplicationController
   # GET /widgets/1
   # GET /widgets/1.json
   def show
+    if @widget.nil?
+      flash[:error] = "Item id is not valid"
+      redirect_to widgets_path
+    end #if
   end
 
   # GET /widgets/new
@@ -19,6 +23,12 @@ class WidgetsController < ApplicationController
 
   # GET /widgets/1/edit
   def edit
+
+#TODO: Refactor this down (appears in `def show` as well)
+    if @widget.nil?
+      flash[:error] = "Item id is not valid"
+      redirect_to widgets_path
+    end #if
   end
 
   # POST /widgets
@@ -64,7 +74,7 @@ class WidgetsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_widget
-      @widget = Widget.find(params[:id])
+      @widget = Widget.find_by_id(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
