@@ -1,5 +1,5 @@
 require 'spec_helper'
-
+require 'support/assert_records_values_helper'
 RSpec.describe WidgetsController do
 # ANNOTATE: Each `describe` block represents a class (completed by rspec), so the use of `@instance` variables within the `describe` blocks is appropriate.  See
 # http://stackoverflow.com/questions/12645198/how-do-instance-variables-in-rspec-work
@@ -60,7 +60,7 @@ RSpec.describe WidgetsController do
     end #context widget exists
 
     context "when the widget does not exist" do
-      let(:wrong_id) { Widget.maximum(:id).next }
+      let(:wrong_id) { "0" }
 
       before(:each) do
         get :show, id: wrong_id
@@ -112,15 +112,13 @@ RSpec.describe WidgetsController do
     end #with valid attributes
 
     context "when the widget does not exist" do
-      let(:wrong_id) { Widget.maximum(:id).next }
+      let(:wrong_id) { "0" }
 
       before(:each) do
         get :edit, id: wrong_id
       end #before
 
       it "renders the :index view" do
-        wrong_id = Widget.maximum(:id).next
-        get :edit, id: wrong_id
         expect(response).to redirect_to( :action => "index")
       end #case renders :index
 
@@ -157,23 +155,88 @@ RSpec.describe WidgetsController do
   end #POST #create
 
   #########################################################
-  describe "PATCH #update" do
-    context "with valid attributes" do
-      it "saves updates to the widget"
-      it "does not change other widgets"
-      it "renders the :show template"
-    end #with valid attributes
+describe 'PATCH update' do
+  # see http://stackoverflow.com/a/24739399/3780876
+  let(:widget) { FactoryGirl.create :widget, price: 25 }
+
+  # user-based changes
+  let(:valid_update_attributes) { { name: 'Great updated product' } }
+  # merge any expected contoller-based changes using merge method
+  let(:expected_update_attributes) { valid_update_attributes.merge( id: widget.id) }
+  let(:action) { patch :update, id: widget.id, widget: valid_update_attributes }
+  let(:for_the_same_widget) { expect(widget.reload.id).to eq(widget.id) }
+
+  let(:invalid_update_attributes) { { name: "" } }
+  let(:invalid_action) { patch :update, id: widget.id, widget: invalid_update_attributes }
+
+  context "with valid attributes" do
+
+    before { action }
+
+    it "updates the widget with changed values" do
+      for_the_same_widget
+      # TODO: for...each to iterate through expected_update_attributes, test against widget
+      expect(widget.reload.name).to eq(expected_update_attributes[:name])
+    end #case updates widget
+
+    it "does not alter unchanged values" do
+      for_the_same_widget
+      # TODO: for...each to interate through widget attributes, if not a member of expected_update_attributes, test unchanged
+      expect(widget.reload.price).to eq(widget.price)
+    end #case does not alter
+
+    it "redirects to the widget :show template" do
+      for_the_same_widget
+      expect(response).to redirect_to(widget)
+    end #case redirect to :show
+
+    it "provides notice of update" do
+      expect(controller.notice).to eq('Widget was successfully updated.')
+    end
+
+  end #with valid attributes
 
     context "with invalid attributes" do
-      it "does not change the widget"
-      it "redirects to the :edit template for @widget"
+
+      before { invalid_action }
+
+      it "does not change the widget" do
+        for_the_same_widget
+        expect(widget).to eq(widget.reload)
+      end #case does not change
+
+      it "redirects to the :edit template for @widget" do
+        for_the_same_widget
+        expect(response).to render_template("edit", id: widget.id)
+      end #case redirect to :edit
+
+      it "provides notice of error" do
+        expect(controller.flash).not_to be_nil
+      end
+
     end #with invalid attributes
   end #PATCH #update
 
   ##########################################################
   describe "DELETE #destroy" do
-    it "removes the widget from the database"
-    it "redirects to the :index view"
+    let(:setup) { FactoryGirl.create :widget }
+    let(:action) { delete :destroy, id: setup.id }
+
+    before{ setup }
+
+    it "removes the widget from the database" do
+      expect{ action }.to change(Widget, :count).by(-1)
+    end #case removes widget
+
+    it "redirects to the :index view" do
+      expect(action).to redirect_to(:widgets)
+    end #case redirect to :index
+
+    it "provides notice of update" do
+      action
+      expect(controller.notice).to eq('Widget was successfully destroyed.')
+    end #case provide notice
+
   end #DELETE #destroy
 
 end #WidgetsController

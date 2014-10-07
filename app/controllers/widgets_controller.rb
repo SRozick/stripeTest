@@ -55,6 +55,7 @@ class WidgetsController < ApplicationController
         format.html { redirect_to @widget, notice: 'Widget was successfully updated.' }
         format.json { render :show, status: :ok, location: @widget }
       else
+        flash[:error] = "Could not update Widget."
         format.html { render :edit }
         format.json { render json: @widget.errors, status: :unprocessable_entity }
       end
