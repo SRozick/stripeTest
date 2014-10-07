@@ -17,10 +17,10 @@ ActiveRecord::Schema.define(version: 20141002155243) do
   enable_extension "plpgsql"
 
   create_table "widgets", force: true do |t|
-    t.string   "name"
-    t.text     "description"
+    t.string   "name" :null => false
+    t.text     "description" :null => false
     t.integer  "picture"
-    t.decimal  "price"
+    t.decimal  "price" :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
