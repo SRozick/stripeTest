@@ -6,18 +6,15 @@ RSpec.describe WidgetsController do
 
 #TODO: Invalid attributes cases should be tested for flash messages
 #TODO: Valid create/ edit cases should be tested for flash messages
+#TODO: Test delete vs invalid object
 
   #######################################################
   describe "GET #index" do
-    let(:widget)        { FactoryGirl.create(:widget) }
-    let(:other_widget)  { FactoryGirl.create(:widget) }
+    let(:widget)        { create(:widget) }
+    let(:other_widget)  { create(:widget) }
+    let(:action)        { get :index }
 
-    before(:each) do
-      get :index
-    end #before
-
-    #TODO: Why not Widget.create or simply create
-    #TODO: Why isn't database clearing after each test iteration?
+    before { action }
 
     #TODO: Make a blog note about testing index.  Public available examples
     # do not test for retrieval of the entire index- they test for
@@ -41,13 +38,14 @@ RSpec.describe WidgetsController do
 
   #########################################################
   describe "GET #show" do
+    let(:widget)                      { create(:widget) }
+    let(:id_of_widget_not_exist)      { "0" }
+    let(:action)                      { get :show, id: widget }
+    let(:invalid_action)              { get :show, id: id_of_widget_not_exist }
 
     context "when the widget exists" do
-      let(:widget) { FactoryGirl.create(:widget) }
 
-      before(:each) do
-        get :show, id: widget
-      end
+      before { action }
 
       it "assigns the requested widget to @widget" do
         expect(assigns(:widget)).to eq(widget)
@@ -56,29 +54,23 @@ RSpec.describe WidgetsController do
       it "renders the :show template" do
         expect(response).to render_template("show")
       end #case renders
-
     end #context widget exists
 
     context "when the widget does not exist" do
-      let(:wrong_id) { "0" }
 
-      before(:each) do
-        get :show, id: wrong_id
-      end #before
+      before { invalid_action }
 
       it "renders the :index template" do
         expect(response).to redirect_to( :action => "index")
       end #case renders :index
-
     end #context widget not exist
   end #GET #show
 
   ########################################################
   describe "GET #new" do
+    let(:action)                    { get :new }
 
-    before (:each) do
-      get :new
-    end #before
+    before { action }
 
     it "assigns a new widget to @widget" do
       expect(assigns(:widget)).to be_a_new(Widget)
@@ -92,13 +84,14 @@ RSpec.describe WidgetsController do
 
   #########################################################
   describe "GET #edit" do
+    let(:widget)                    { create(:widget) }
+    let(:action)                    { get :edit, id: widget }
+    let(:id_of_widget_not_exist)    { "0" }
+    let(:invalid_action)            { get :edit, id: id_of_widget_not_exist }
 
     context "when the widget exists" do
-      let(:widget) { FactoryGirl.create(:widget) }
 
-      before(:each) do
-        get :edit, id: widget
-      end #before
+      before { action }
 
       it "assigns the requested widget to @widget" do
         expect(assigns(:widget)).to eq(widget)
@@ -112,11 +105,8 @@ RSpec.describe WidgetsController do
     end #with valid attributes
 
     context "when the widget does not exist" do
-      let(:wrong_id) { "0" }
 
-      before(:each) do
-        get :edit, id: wrong_id
-      end #before
+      before { invalid_action }
 
       it "renders the :index view" do
         expect(response).to redirect_to( :action => "index")
@@ -127,28 +117,28 @@ RSpec.describe WidgetsController do
 
   ##########################################################
   describe "POST #create" do
+    let(:action)                { post :create, :widget => attributes_for(:widget) }
+    let(:invalid_action)        { post :create, :widget => attributes_for(:invalid_widget) }
     context "with valid attributes" do
-      subject { post :create, :widget => FactoryGirl.attributes_for(:widget) }
 
       it "creates a new widget" do
-        expect{ subject }.to change(Widget, :count).by(1)
+        expect{ action }.to change(Widget, :count).by(1)
       end #case creates widget
 
       it "redirects to the new widget" do
-        expect(subject).to redirect_to  :action => :show,
+        expect(action).to redirect_to  :action => :show,
                                         :id => assigns(:widget).id
       end #case redirect to new widget
     end #with valid attributes
 
     context "with invalid attributes" do
-      subject { post :create, :widget => FactoryGirl.attributes_for(:invalid_widget) }
 
       it "does not save the new widget" do
-        expect{ subject }.not_to change(Widget, :count)
+        expect{ invalid_action }.not_to change(Widget, :count)
       end #case does not save
 
       it "re-renders the :new template" do
-        expect(subject).to render_template("new")
+        expect(invalid_action).to render_template("new")
       end #case renders :new
 
     end #with invalid attributes
@@ -157,33 +147,39 @@ RSpec.describe WidgetsController do
   #########################################################
 describe 'PATCH update' do
   # see http://stackoverflow.com/a/24739399/3780876
-  let(:widget) { FactoryGirl.create :widget, price: 25 }
+  let(:widget)                      { create :widget }
 
-  # user-based changes
-  let(:valid_update_attributes) { { name: 'Great updated product' } }
-  # merge any expected contoller-based changes using merge method
-  let(:expected_update_attributes) { valid_update_attributes.merge( id: widget.id) }
-  let(:action) { patch :update, id: widget.id, widget: valid_update_attributes }
-  let(:for_the_same_widget) { expect(widget.reload.id).to eq(widget.id) }
-
-  let(:invalid_update_attributes) { { name: "" } }
-  let(:invalid_action) { patch :update, id: widget.id, widget: invalid_update_attributes }
+  let(:attributes_changed_in_form)  { { "name" => 'Great updated product' } }
+  let(:attributes_changed_elsewhere){ { nil => nil } } #include any attributes changed by controller
+  let(:expected_final_attributes)   { attributes_changed_in_form.merge(attributes_changed_elsewhere) }
+  let(:action)                      { patch :update, id: widget.id, widget: attributes_changed_in_form }
+  let(:for_the_same_widget)         { expect(widget.reload.id).to eq(widget.id) }
+  let(:invalid_update_attributes)   { { name: "" } }
+  let(:invalid_action)              { patch :update, id: widget.id, widget: invalid_update_attributes }
+  let(:expect_reload_to_eq_final)   { expected_final_attributes.each_pair do |ukey, uvalue|
+                                        widget.attributes.each_pair do |key, value|
+                                          if key == ukey
+                                            expect(widget.reload[key]).to eq(expected_final_attributes[ukey])
+                                          end #if
+                                        end #each widget.attributes
+                                      end #each expected_final}
+                                    }
+#TODO would really like to have a valid test that untouched model attributes are
+# not changed
 
   context "with valid attributes" do
+
+    it "loads a widget" do
+      expect(widget.changed?).to eq(false)
+    end
 
     before { action }
 
     it "updates the widget with changed values" do
       for_the_same_widget
-      # TODO: for...each to iterate through expected_update_attributes, test against widget
-      expect(widget.reload.name).to eq(expected_update_attributes[:name])
-    end #case updates widget
+      expect_reload_to_eq_final
 
-    it "does not alter unchanged values" do
-      for_the_same_widget
-      # TODO: for...each to interate through widget attributes, if not a member of expected_update_attributes, test unchanged
-      expect(widget.reload.price).to eq(widget.price)
-    end #case does not alter
+    end #case updates widget
 
     it "redirects to the widget :show template" do
       for_the_same_widget
@@ -219,8 +215,8 @@ describe 'PATCH update' do
 
   ##########################################################
   describe "DELETE #destroy" do
-    let(:setup) { FactoryGirl.create :widget }
-    let(:action) { delete :destroy, id: setup.id }
+    let(:setup)       { create :widget }
+    let(:action)      { delete :destroy, id: setup.id }
 
     before{ setup }
 
