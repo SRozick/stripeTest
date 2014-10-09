@@ -117,8 +117,8 @@ RSpec.describe WidgetsController do
 
   ##########################################################
   describe "POST #create" do
-    let(:action)                { post :create, :widget => FactoryGirl.attributes_for(:widget) }
-    let(:invalid_action)        { post :create, :widget => FactoryGirl.attributes_for(:invalid_widget) }
+    let(:action)                { post :create, :widget => attributes_for(:widget) }
+    let(:invalid_action)        { post :create, :widget => attributes_for(:invalid_widget) }
     context "with valid attributes" do
 
       it "creates a new widget" do
@@ -147,7 +147,7 @@ RSpec.describe WidgetsController do
   #########################################################
 describe 'PATCH update' do
   # see http://stackoverflow.com/a/24739399/3780876
-  let(:widget)                      { FactoryGirl.create :widget, price: 25 }
+  let(:widget)                      { create :widget }
 
   let(:attributes_changed_in_form)  { { "name" => 'Great updated product' } }
   let(:attributes_changed_elsewhere){ { nil => nil } } #include any attributes changed by controller
@@ -164,30 +164,22 @@ describe 'PATCH update' do
                                         end #each widget.attributes
                                       end #each expected_final}
                                     }
-  let(:expect_unchanged_to_be_unch) { expected_final_attributes.each_pair do |ukey, uvalue|
-                                        widget.attributes.each_pair do |key, value|
-                                          if key != ukey
-                                            expect(widget.reload[key]).to eq(widget[key])
-                                          end #if
-                                        end #each widget.attributes
-                                      end #each expected_final}
-                                    }
+#TODO would really like to have a valid test that untouched model attributes are
+# not changed
 
   context "with valid attributes" do
+
+    it "loads a widget" do
+      expect(widget.changed?).to eq(false)
+    end
 
     before { action }
 
     it "updates the widget with changed values" do
       for_the_same_widget
       expect_reload_to_eq_final
-    end #case updates widget
 
-    it "does not alter unchanged values" do
-      for_the_same_widget
-      # TODO: for...each to interate through widget attributes, if not a member of expected_update_attributes, test unchanged
-      expect_unchanged_to_be_unch
-      expect(widget.reload.price).to eq(widget.price)
-    end #case does not alter
+    end #case updates widget
 
     it "redirects to the widget :show template" do
       for_the_same_widget
@@ -223,8 +215,8 @@ describe 'PATCH update' do
 
   ##########################################################
   describe "DELETE #destroy" do
-    let(:setup) { FactoryGirl.create :widget }
-    let(:action) { delete :destroy, id: setup.id }
+    let(:setup)       { create :widget }
+    let(:action)      { delete :destroy, id: setup.id }
 
     before{ setup }
 
