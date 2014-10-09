@@ -11,7 +11,7 @@ class WidgetsController < ApplicationController
   # GET /widgets/1.json
   def show
     if @widget.nil?
-      flash[:error] = "Item id is not valid"
+      flash[:error] = "Item id was not valid"
       redirect_to widgets_path
     end #if
   end
@@ -26,7 +26,7 @@ class WidgetsController < ApplicationController
 
 #TODO: Refactor this down (appears in `def show` as well)
     if @widget.nil?
-      flash[:error] = "Item id is not valid"
+      flash[:error] = "Item id was not valid"
       redirect_to widgets_path
     end #if
   end
@@ -38,9 +38,10 @@ class WidgetsController < ApplicationController
 
     respond_to do |format|
       if @widget.save
-        format.html { redirect_to @widget, notice: 'Widget was successfully created.' }
+        format.html { redirect_to @widget, notice: 'Widget was successfully created' }
         format.json { render :show, status: :created, location: @widget }
       else
+        flash[:error] = "Could not create Widget"
         format.html { render :new }
         format.json { render json: @widget.errors, status: :unprocessable_entity }
       end
@@ -52,10 +53,10 @@ class WidgetsController < ApplicationController
   def update
     respond_to do |format|
       if @widget.update(widget_params)
-        format.html { redirect_to @widget, notice: 'Widget was successfully updated.' }
+        format.html { redirect_to @widget, notice: 'Widget was successfully updated' }
         format.json { render :show, status: :ok, location: @widget }
       else
-        flash[:error] = "Could not update Widget."
+        flash[:error] = "Could not update Widget"
         format.html { render :edit }
         format.json { render json: @widget.errors, status: :unprocessable_entity }
       end

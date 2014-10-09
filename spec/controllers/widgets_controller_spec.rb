@@ -1,18 +1,13 @@
 require 'spec_helper'
-require 'support/assert_records_values_helper'
 RSpec.describe WidgetsController do
-# ANNOTATE: Each `describe` block represents a class (completed by rspec), so the use of `@instance` variables within the `describe` blocks is appropriate.  See
-# http://stackoverflow.com/questions/12645198/how-do-instance-variables-in-rspec-work
 
-#TODO: Invalid attributes cases should be tested for flash messages
-#TODO: Valid create/ edit cases should be tested for flash messages
 #TODO: Test delete vs invalid object
 
   #######################################################
   describe "GET #index" do
-    let(:widget)        { create(:widget) }
-    let(:other_widget)  { create(:widget) }
-    let(:action)        { get :index }
+    let(:widget)                    { create(:widget) }
+    let(:other_widget)              { create(:widget) }
+    let(:action)                    { get :index }
 
     before { action }
 
@@ -63,6 +58,11 @@ RSpec.describe WidgetsController do
       it "renders the :index template" do
         expect(response).to redirect_to( :action => "index")
       end #case renders :index
+
+      it "passes a flash message" do
+        expect(controller.flash[:error]).to eq('Item id was not valid')
+      end
+
     end #context widget not exist
   end #GET #show
 
@@ -112,13 +112,18 @@ RSpec.describe WidgetsController do
         expect(response).to redirect_to( :action => "index")
       end #case renders :index
 
+      it "passes a flash message" do
+        expect(controller.flash[:error]).to eq('Item id was not valid')
+      end
+
+
     end #with invalid attributes
   end #GET #edit
 
   ##########################################################
   describe "POST #create" do
-    let(:action)                { post :create, :widget => attributes_for(:widget) }
-    let(:invalid_action)        { post :create, :widget => attributes_for(:invalid_widget) }
+    let(:action)                    { post :create, :widget => attributes_for(:widget) }
+    let(:invalid_action)            { post :create, :widget => attributes_for(:invalid_widget) }
     context "with valid attributes" do
 
       it "creates a new widget" do
@@ -129,6 +134,11 @@ RSpec.describe WidgetsController do
         expect(action).to redirect_to  :action => :show,
                                         :id => assigns(:widget).id
       end #case redirect to new widget
+
+      it "provides notice of update" do
+        action
+        expect(controller.notice).to eq('Widget was successfully created')
+      end
     end #with valid attributes
 
     context "with invalid attributes" do
@@ -141,16 +151,27 @@ RSpec.describe WidgetsController do
         expect(invalid_action).to render_template("new")
       end #case renders :new
 
+      it "provides notice of error" do
+        invalid_action
+        expect(controller.flash[:error]).to eq("Could not create Widget")
+      end
     end #with invalid attributes
   end #POST #create
 
   #########################################################
 describe 'PATCH update' do
   # see http://stackoverflow.com/a/24739399/3780876
+  let (:setup)                      {
+                                      create :widget
+                                      @attributes_before_edit = Widget.new
+                                      widget.attributes.each_pair do |key, value|
+                                        @attributes_before_edit[key] = value
+                                      end
+                                    }
   let(:widget)                      { create :widget }
 
   let(:attributes_changed_in_form)  { { "name" => 'Great updated product' } }
-  let(:attributes_changed_elsewhere){ { nil => nil } } #include any attributes changed by controller
+  let(:attributes_changed_elsewhere){ { "picture" => nil } } #include any attributes changed by controller
   let(:expected_final_attributes)   { attributes_changed_in_form.merge(attributes_changed_elsewhere) }
   let(:action)                      { patch :update, id: widget.id, widget: attributes_changed_in_form }
   let(:for_the_same_widget)         { expect(widget.reload.id).to eq(widget.id) }
@@ -159,35 +180,52 @@ describe 'PATCH update' do
   let(:expect_reload_to_eq_final)   { expected_final_attributes.each_pair do |ukey, uvalue|
                                         widget.attributes.each_pair do |key, value|
                                           if key == ukey
-                                            expect(widget.reload[key]).to eq(expected_final_attributes[ukey])
+                                            expect(widget.reload[key]).to eq(expected_final_attributes[key])
                                           end #if
                                         end #each widget.attributes
-                                      end #each expected_final}
+                                      end #each expected_final
                                     }
-#TODO would really like to have a valid test that untouched model attributes are
-# not changed
+  let(:expect_unchanged_to_be_same) {
+                                      @attributes_before_edit.attributes.each_pair do |key, value|
+                                        unchanged = true
+                                        expected_final_attributes.each_pair do |ukey, uvalue|
+                                          # find out if value was changed during update action.
+                                          if key == ukey || key == "updated_at"
+                                            unchanged = false
+                                          end #if
+                                        end #expected_final loop
+                                        # if value wasn't changed, test against before and after update values
+                                        if unchanged == true
+                                          if @attributes_before_edit[key].is_a? ActiveSupport::TimeWithZone
+                                            expect(widget[:created_at]).to be_within(0.00001).of(widget.reload[:created_at])
+                                          else
+                                            expect(@attributes_before_edit[key]).to eq(widget.reload[key])
+                                          end #test TimeWithZone
+                                        end #if
+                                      end #@attributes loop
+                                    }
 
   context "with valid attributes" do
 
-    it "loads a widget" do
-      expect(widget.changed?).to eq(false)
-    end
-
-    before { action }
+    before { setup }
 
     it "updates the widget with changed values" do
-      for_the_same_widget
+      action
       expect_reload_to_eq_final
-
     end #case updates widget
 
+    it "does not change unchanged values" do
+      action
+      expect_unchanged_to_be_same
+    end #case does not change unchanged
+
     it "redirects to the widget :show template" do
-      for_the_same_widget
-      expect(response).to redirect_to(widget)
+      expect(action).to redirect_to(widget)
     end #case redirect to :show
 
     it "provides notice of update" do
-      expect(controller.notice).to eq('Widget was successfully updated.')
+      action
+      expect(controller.notice).to eq('Widget was successfully updated')
     end
 
   end #with valid attributes
@@ -207,7 +245,7 @@ describe 'PATCH update' do
       end #case redirect to :edit
 
       it "provides notice of error" do
-        expect(controller.flash).not_to be_nil
+        expect(controller.flash[:error]).to eq("Could not update Widget")
       end
 
     end #with invalid attributes
@@ -215,23 +253,44 @@ describe 'PATCH update' do
 
   ##########################################################
   describe "DELETE #destroy" do
-    let(:setup)       { create :widget }
-    let(:action)      { delete :destroy, id: setup.id }
+    let(:setup)                     { create :widget }
+    let(:action)                    { delete :destroy, id: setup.id }
+    let(:id_of_widget_not_exist)    { "0" }
+    let(:invalid_action)            { get :edit, id: id_of_widget_not_exist }
 
-    before{ setup }
 
-    it "removes the widget from the database" do
-      expect{ action }.to change(Widget, :count).by(-1)
-    end #case removes widget
+    context "when the widget exists" do
 
-    it "redirects to the :index view" do
-      expect(action).to redirect_to(:widgets)
-    end #case redirect to :index
+      before{ setup }
 
-    it "provides notice of update" do
-      action
-      expect(controller.notice).to eq('Widget was successfully destroyed.')
-    end #case provide notice
+      it "removes the widget from the database" do
+        expect{ action }.to change(Widget, :count).by(-1)
+      end #case removes widget
+
+      it "redirects to the :index view" do
+        expect(action).to redirect_to(:widgets)
+      end #case redirect to :index
+
+      it "Flashes notice of Widget destruction" do
+        action
+        expect(controller.notice).to eq('Widget was successfully destroyed.')
+      end #case provide notice
+
+    end #when the widget exists
+
+    context "when the widget does not exist" do
+
+      before { invalid_action }
+
+      it "renders the :index view" do
+        expect(response).to redirect_to( :action => "index")
+      end #case renders :index
+
+      it "passes a flash message" do
+        expect(controller.flash[:error]).to eq('Item id was not valid')
+      end
+
+    end #with invalid attributes
 
   end #DELETE #destroy
 
