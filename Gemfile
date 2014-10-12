@@ -16,6 +16,9 @@ gem 'execjs'
 gem 'jquery-rails'
 gem 'jbuilder', '~> 2.0'
 
+gem 'foundation-rails'
+gem 'haml'
+
 # Documentation
 gem 'sdoc', '~> 0.4.0',          group: :doc
 

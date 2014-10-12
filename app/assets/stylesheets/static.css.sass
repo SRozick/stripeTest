@@ -1,0 +1,23 @@
+// Place all the styles related to the static controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+// TODO: Investigate usefulness of Data URI feature
+// See asset_data_uri helper for .erb files and the Rails asset pipeline at
+// http://guides.rubyonrails.org/asset_pipeline.html
+
+.video-bkg-container video
+  position:   fixed
+  overflow:   hidden
+  min-width:  100%
+  min-height: 100%
+  width:      auto
+  height:     auto
+  z-index:    -100
+  right:      0
+  bottom:     0
+
+  .video-overlay-content
+    position: absolute
+    top: 0
+    left: 0

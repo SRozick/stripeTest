@@ -22,5 +22,6 @@ module StripeTest
             :request_specs =>       true    # whether to generate request specs for action chains
         g.fixture_replacement :factory_girl, :dir => "spec/factories"
     end #config.generators do
+
   end #Application class
 end #StripeTest module
