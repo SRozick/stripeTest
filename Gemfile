@@ -30,6 +30,8 @@ group :development, :test do
   gem 'spring-commands-rspec'
   gem 'rspec-rails'
   gem 'guard-rspec'
+  gem 'spork-rails'
+  gem 'guard-spork'
   gem 'factory_girl_rails'
   gem 'faker'
   gem 'capybara'
@@ -39,4 +41,5 @@ end
 
 group :test do
   gem 'launchy'
+
 end

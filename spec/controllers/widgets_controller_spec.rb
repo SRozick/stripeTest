@@ -1,4 +1,7 @@
 require 'spec_helper'
+require 'support/factory_girl'
+require 'support/database_cleaner'
+
 RSpec.describe WidgetsController do
 
 #TODO: Test delete vs invalid object
