@@ -37,6 +37,7 @@ group :development, :test do
   gem 'capybara'
   gem 'pry'
   gem 'database_cleaner'
+  gem 'guard-livereload'
 end
 
 group :test do

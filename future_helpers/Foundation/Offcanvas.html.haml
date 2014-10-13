@@ -1,0 +1,30 @@
+
+  -# Use below for basic Foundation off-canvas menu
+  -# See http://foundation.zurb.com/docs/components/offcanvas.html#
+  -# Basic section
+  %body
+    .off-canvas-wrap{ :'data-offcanvas' => true }
+      .inner-wrap
+        %a.left-off-canvas-toggle{ href: '#' }
+          Menu
+        %aside.left-off-canvas-menu
+          %ul
+            %li
+              %a{href: '#' }
+                Item 1
+            %li
+              %a{href: '#' }
+                Item 2
+            %li
+              %a{href: '#' }
+                Item 3
+            %li
+              %a{href: '#' }
+                Item 4
+            %li
+              %a{href: '#' }
+                Item 5
+        -# Yield is here (example taken from application.html.haml)
+        = yield
+        %a.exit-off-canvas
+    = javascript_include_tag "application"

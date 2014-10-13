@@ -30,10 +30,6 @@ RSpec.describe "the Home page" do
       expect(page.title).to_not eq(page.find('h1').text)
     end #case different text
 
-    it "has an alt attribute for every image" do
-      expect(page.body.scan(/<img/).count).to be(page.body.scan(/alt=\"/).count)
-    end #case alt attribute on images
-
     it "has a meta description tag" do
       expect(page.body.scan(/<meta.*name='description.*>/).count).to be 1
     end #case meta desc tag
@@ -57,7 +53,17 @@ RSpec.describe "the Home page" do
     #http://schema.org/
     #https://support.google.com/webmasters/answer/146750
 
-  describe "conforms to usability recommendations"
+  end #conforms to SEO
+
+  describe "conforms to usability recommendations" do
+
+    it "has an alt attribute for every image" do
+      expect(page.body.scan(/<img.*>/).count).to be(page.body.scan(/<img.*alt='.*'.*>/).count)
+    end #case alt attribute on images
+
+    it "has an alt attribute for every video" do
+      expect(page.body.scan(/<video.*>/).count).to be(page.body.scan(/<video.*alt='.*'.*>/).count)
+    end #case alt attribute on video
 
     it "presents contact information prominently (header)"
 
@@ -67,9 +73,41 @@ RSpec.describe "the Home page" do
 
     it "presents a copyright notice (footer)"
 
-  describe "has main content"
+  end #conforms to usability
 
-    it "links to blog, portfolio, services, and contact pages (menu)"
+  describe "has a menu bar" do
+
+    it "links to blog, portfolio, services, and contact pages (menu)" do
+      expect(page).to have_selector("Inherent Knowledge")
+    end #case menu
+
+    it "links to home page" do
+      expect(page).to have_link("Home")
+    end #case menu
+
+    it "links to contact page" do
+      expect(page).to have_link("Get a Quote")
+    end #case menu
+
+    it "links to pricing page" do
+      expect(page).to have_link("Pricing")
+    end #case menu
+
+    it "links to blog" do
+      expect(page).to have_link("Blog")
+    end #case menu
+
+    it "links to services page" do
+      expect(page).to have_link("Services")
+    end #case menu
+
+    it "links to Portfolio" do
+      expect(page).to have_link("Portfolio")
+    end #case menu
+
+  end #menu bar
+
+  describe "has main content" do
 
     it "contains sections about 'why to choose', 'featured clients/ services', 'References/ qualifications', 'Contact Us/Mailto/Callto'"
 
@@ -77,5 +115,5 @@ RSpec.describe "the Home page" do
 
     it "provides an animated gif for mobile use"
 
-  end #SEO best practices
+  end #main content
 end #the Home page

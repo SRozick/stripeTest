@@ -1,4 +1,5 @@
 !!!
+-# see helper methods in app/helpers/application_helper.rb
 %html(lang="en")
   %head
     %meta{ charset: 'utf-8' }
@@ -11,5 +12,39 @@
     = javascript_include_tag "vendor/modernizr"
     = csrf_meta_tags
   %body
-    = yield
+    .off-canvas-wrap{ :'data-offcanvas' => true }
+      .inner-wrap
+        %nav.tab-bar
+          %section.left-small
+            %a.left-off-canvas-toggle.menu-icon{ href: '#' }
+              %span
+          %section.middle.tab-bar-section
+            %h2.title
+              Inherent Knowledge
+        %aside.left-off-canvas-menu
+          %ul.off-canvas-list
+            %li
+              %label
+                Inherent Knowledge
+            %li
+              %a{href: '#' }
+                Home
+            %li
+              %a{href: '#' }
+                Get a Quote
+            %li
+              %a{href: '#' }
+                Pricing
+            %li
+              %a{href: '#' }
+                Blog
+            %li
+              %a{href: '#' }
+                Services
+            %li
+              %a{href: '#' }
+                Portfolio
+        %section.main-section
+        = yield
+        %a.exit-off-canvas
     = javascript_include_tag "application"
