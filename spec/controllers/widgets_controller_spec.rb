@@ -26,6 +26,8 @@ RSpec.describe WidgetsController do
         # end
     # Replace with:
     it "returns an index containing all widgets" do
+      other_widget
+      widget
       expect(assigns(:widgets)).to include(widget)
     end #case populates widgets
 

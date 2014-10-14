@@ -1,5 +1,6 @@
 require 'capybara/rspec'
 require 'spec_helper'
+require 'rails_helper'
 
 RSpec.describe "the Home page" do
 
@@ -65,21 +66,71 @@ RSpec.describe "the Home page" do
       expect(page.body.scan(/<video.*>/).count).to be(page.body.scan(/<video.*alt='.*'.*>/).count)
     end #case alt attribute on video
 
-    it "presents contact information prominently (header)"
+    it "presents contact information prominently (header)" do
+      expect(page).to have_tag('footer') do
+        with_tag '.phone',        text: APP_CONFIG['contact_phone']
+        with_tag '.email',        text: APP_CONFIG['contact_email_sales']
+      end #have_tag
+    end #case presents header contact info
+
+    it "presents contact information in the footer" do
+      expect(page).to have_tag('footer') do
+        with_tag '.street',       text: APP_CONFIG['contact_address']
+        with_tag '.suite',        text: APP_CONFIG['contact_suite']
+        with_tag '.city',         text: APP_CONFIG['contact_city']
+        with_tag '.state',        text: APP_CONFIG['contact_state']
+        with_tag '.postal',       text: APP_CONFIG['contact_postal']
+        with_tag '.webmaster',    text: APP_CONFIG['contact_email_web']
+      end #have_tag
+    end #case presents header contact info
 
     it "presents a publication date (footer)"
 
     it "presents a last updated date (footer)"
 
-    it "presents a copyright notice (footer)"
+#TODO: Refactor to match config/config.yml value for copyright
+    it "presents a copyright notice (footer)" do
+      expect(page).to have_tag('footer') do
+        with_tag 'div.copyright', text: APP_CONFIG['copyright_notice']
+      end #have_tag
+    end #case copyright
 
   end #conforms to usability
 
   describe "has a menu bar" do
 
     it "links to blog, portfolio, services, and contact pages (menu)" do
-      expect(page).to have_selector("Inherent Knowledge")
+      expect(page).to have_tag('nav.tab-bar') do
+        with_tag 'section.left-small'
+      end #have_tag
     end #case menu
+
+    it "has an accessible left side menu" do
+      expect(page).to have_tag('nav.tab-bar') do
+        with_tag 'section.left-small'
+      end #have_tag
+    end #case left side menu
+
+    it "has an off-canvas left menu" do
+      expect(page).to have_tag('nav.left-off-canvas-menu') do
+        with_tag 'label',         text: /Inherent Knowledge/
+        with_tag 'a',             text: /Home/
+        with_tag 'a',             text: /Get a Quote/
+        with_tag 'a',             text: /Pricing/
+        with_tag 'a',             text: /Blog/
+        with_tag 'a',             text: /Services/
+        with_tag 'a',             text: /Portfolio/
+      end #have_tag
+    end #case off-canvas menu
+
+    it "goes to the Home page when the Home link is clicked" do
+      visit root_path
+      within ('nav.left-off-canvas-menu') do
+        click_link 'Home'
+      end #within
+      expect(page).to have_http_status(:success)
+      expect(page).to have_content(/hello inherent knowledge/i)
+    end #case Home link
 
     it "links to home page" do
       expect(page).to have_link("Home")

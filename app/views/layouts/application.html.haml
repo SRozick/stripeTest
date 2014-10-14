@@ -21,13 +21,13 @@
           %section.middle.tab-bar-section
             %h2.title
               Inherent Knowledge
-        %aside.left-off-canvas-menu
+        %nav.left-off-canvas-menu
           %ul.off-canvas-list
             %li
               %label
                 Inherent Knowledge
             %li
-              %a{href: '#' }
+              %a{href: root_path }
                 Home
             %li
               %a{href: '#' }
@@ -46,5 +46,27 @@
                 Portfolio
         %section.main-section
         = yield
+        .row
+          %footer
+            .copyright
+              = APP_CONFIG['copyright_notice']
+            .location
+              %span.street
+                = APP_CONFIG['contact_address']
+              %span.suite
+                = APP_CONFIG['contact_suite']
+              %p.city
+                = APP_CONFIG['contact_city']
+              %span.state
+                = APP_CONFIG['contact_state']
+              %span.postal
+                = APP_CONFIG['contact_postal']
+              %p.phone
+                = APP_CONFIG['contact_phone']
+              %p.email
+                %a{href: "mailto:#{APP_CONFIG['contact_email_sales']} " }
+              %p.webmaster
+                %a{href: "mailto:#{APP_CONFIG['contact_email_web']} " }
+
         %a.exit-off-canvas
     = javascript_include_tag "application"

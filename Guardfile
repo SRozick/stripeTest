@@ -8,6 +8,7 @@
 guard 'spork', :cucumber_env => { 'RAILS_ENV' => 'test' }, :rspec_env => { 'RAILS_ENV' => 'test' } do
   watch('config/application.rb')
   watch('config/environment.rb')
+  watch('config/config.yml')
   watch('config/environments/test.rb')
   watch(%r{^config/initializers/.+\.rb$})
   watch('Gemfile.lock')
@@ -15,20 +16,14 @@ guard 'spork', :cucumber_env => { 'RAILS_ENV' => 'test' }, :rspec_env => { 'RAIL
   # watch('test/test_helper.rb') { :test_unit }
   watch(%r{features/support/}) { :cucumber }
 end
-# Note: The cmd option is now required due to the increasing number of ways
-#       rspec may be run, below are examples of the most common uses.
-#  * bundler: 'bundle exec rspec'
-#  * bundler binstubs: 'bin/rspec'
-#  * spring: 'bin/rsspec' (This will use spring if running and you have
-#                          installed the spring binstubs per the docs)
-#  * zeus: 'zeus rspec' (requires the server to be started separetly)
-#  * 'just' rspec: 'rspec'
+
+# Note: The -drb option for rspec is required for spork to run properly
 guard :rspec, cmd: 'bundle exec rspec --drb' do
   # Watch these files based on REGEX                   # And TEST the files in these folders if the watched files change
   watch(%r{^spec/.+_spec\.rb$})
   watch(%r{^lib/(.+)\.rb$})                                       { |m| "spec/lib/#{m[1]}_spec.rb" }
   watch('spec/spec_helper.rb')                                    { "spec" }
-
+  watch('config/config.yml')                                      { "spec" }
   # Rails example
   watch(%r{^app/(.+)\.rb$})                                       { |m| "spec/#{m[1]}_spec.rb" }
   watch(%r{^app/(.*)(\.erb|\.haml|\.slim)$})                      { |m| "spec/#{m[1]}#{m[2]}_spec.rb" }
@@ -54,8 +49,7 @@ guard :rspec, cmd: 'bundle exec rspec --drb' do
   watch(%r{^spec/acceptance/steps/(.+)_steps\.rb$})               { |m| Dir[File.join("**/#{m[1]}.feature")][0] || 'spec/acceptance' }
 end
 
-
-
+# LiveReload gem will automatically reload web pages on saving into watched folders/files
 guard 'livereload' do
   watch(%r{app/views/.+\.(erb|haml|slim)$})
   watch(%r{app/helpers/.+\.rb})

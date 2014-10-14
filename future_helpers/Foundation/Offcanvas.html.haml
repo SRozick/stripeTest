@@ -1,7 +1,10 @@
 
   -# Use below for basic Foundation off-canvas menu
   -# See http://foundation.zurb.com/docs/components/offcanvas.html#
+
+-#################################################################
   -# Basic section
+
   %body
     .off-canvas-wrap{ :'data-offcanvas' => true }
       .inner-wrap
@@ -28,3 +31,48 @@
         = yield
         %a.exit-off-canvas
     = javascript_include_tag "application"
+
+-#################################################################
+
+-#################################################################
+  -# Advanced section
+
+  %body
+    .off-canvas-wrap{ :'data-offcanvas' => true }
+      .inner-wrap
+        %nav.tab-bar
+          %section.left-small
+            %a.left-off-canvas-toggle.menu-icon{ href: '#' }
+              %span
+          %section.middle.tab-bar-section
+            %h2.title
+              Company Name
+        %aside.left-off-canvas-menu
+          %ul.off-canvas-list
+            %li
+              %label
+                Menu
+            %li
+              %a{href: '#' }
+                Item 1
+            %li
+              %a{href: '#' }
+                Item 2
+            %li
+              %a{href: '#' }
+                Item 3
+            %li
+              %a{href: '#' }
+                Item 4
+            %li
+              %a{href: '#' }
+                Item 5
+            %li
+              %a{href: '#' }
+                Item 6
+        %section.main-section
+        = yield
+        %a.exit-off-canvas
+-#################################################################
+
+-#################################################################

@@ -1,3 +1,25 @@
-default_title:  "Inherent Knowledge, LLC"
+#TODO: Break all this file out into config database table for admin
+brand_name:             'Inherent Knowledge, LLC'
+
+#TODO: In helper file, if company_name and/or default_title are nil, set to brand_name
+company_name:           "Inherent Knowledge, LLC"
+default_title:          "Inherent Knowledge, LLC"
+contact_address:        '9727 Touchton Rd'
+contact_suite:          '#1019`'
+contact_city:           'Jacksonville'
+contact_state:          'FL'
+contact_postal:         '32246'
+contact_country:        'USA'
+
+contact_phone:          '419-466-1234'
+contact_email_sales:    'solutions@inherent-knowledgellc.com'
+contact_email_support:  'support@inherent-knowledgellc.com'
+contact_email_web:      'webmaster@inherent-knowledgellc.com'
+
+copyright_notice:       '(C)2014 Inherent Knowledge, LLC.  All Rights Reserved.'
+
+# Default Meta tag description in the event no description is provided
 default_desc:   "Inherent Knowledge is a web design and search engine optimization (SEO) company in Jacksonville, Florida.  Specialties include e-commerce, mobile design, usability design, and responsive websites for small businesses, especially recreational education businesses."
-default_canonical:   "www.inherent-knowledge.com"
+
+# Default canonical direction in the event no canonical direction is provided
+default_canonical:      "www.inherent-knowledge.com"

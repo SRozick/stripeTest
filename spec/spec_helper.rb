@@ -53,6 +53,7 @@ Spork.prefork do
 
     config.filter_run :focus
     config.run_all_when_everything_filtered = true
+    # config.render_views
 
     config.disable_monkey_patching!
 

@@ -38,6 +38,8 @@ group :development, :test do
   gem 'pry'
   gem 'database_cleaner'
   gem 'guard-livereload'
+  gem 'rack-livereload'
+  gem 'rspec-html-matchers'
 end
 
 group :test do
