@@ -40,6 +40,7 @@ group :development, :test do
   gem 'guard-livereload'
   gem 'rack-livereload'
   gem 'rspec-html-matchers'
+  gem 'poltergeist'
 end
 
 group :test do

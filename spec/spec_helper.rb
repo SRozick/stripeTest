@@ -36,6 +36,10 @@ Spork.prefork do
     end # begin
   end #if
 
+  Capybara.configure do |config|
+    config.ignore_hidden_elements = true
+  end
+
   RSpec.configure do |config|
     config.fixture_path = "#{::Rails.root}/spec/fixtures"
     # Transactional fixtures must be disabled for database cleaner to work

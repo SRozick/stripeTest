@@ -1,6 +1,7 @@
 require 'capybara/rspec'
 require 'spec_helper'
 require 'rails_helper'
+require 'rspec-html-matchers'
 
 RSpec.describe "the Home page" do
 
@@ -49,7 +50,19 @@ RSpec.describe "the Home page" do
 
     it "links to at least 3 reputable other sites"
 
-    it "uses microdata markup to indicate location, hours, and products"
+    it "uses microdata markup to indicate hours of operation, and products"
+
+    it "uses microdata markup to indicate location"  do
+      expect(page).to have_tag('footer') do
+        with_tag '.location-info'
+      end #test if location-info is in footer
+      expect(page).to have_tag('.location-info') do
+        with_tag '.company',      with:{ itemprop: 'name'            }
+        with_tag '.street',       with:{ itemprop: 'streetAddress'   }
+        with_tag '.city',         with:{ itemprop: 'addressLocality' }
+        with_tag '.state',        with:{ itemprop: 'addressRegion'   }
+      end #have_expect-do
+    end #case microdata markup
     # see https://support.google.com/webmasters/answer/176035
     #http://schema.org/
     #https://support.google.com/webmasters/answer/146750
@@ -66,34 +79,36 @@ RSpec.describe "the Home page" do
       expect(page.body.scan(/<video.*>/).count).to be(page.body.scan(/<video.*alt='.*'.*>/).count)
     end #case alt attribute on video
 
-    it "presents contact information prominently (header)" do
-      expect(page).to have_tag('footer') do
-        with_tag '.phone',        text: APP_CONFIG['contact_phone']
-        with_tag '.email',        text: APP_CONFIG['contact_email_sales']
-      end #have_tag
-    end #case presents header contact info
+    it "presents phone contact information prominently (header)" do
+      expect(page.find('footer')).to have_selector('.phone-info',      text: APP_CONFIG['contact_phone'])
+    end #case phone contact info
 
-    it "presents contact information in the footer" do
-      expect(page).to have_tag('footer') do
-        with_tag '.street',       text: APP_CONFIG['contact_address']
-        with_tag '.suite',        text: APP_CONFIG['contact_suite']
-        with_tag '.city',         text: APP_CONFIG['contact_city']
-        with_tag '.state',        text: APP_CONFIG['contact_state']
-        with_tag '.postal',       text: APP_CONFIG['contact_postal']
-        with_tag '.webmaster',    text: APP_CONFIG['contact_email_web']
-      end #have_tag
-    end #case presents header contact info
+    it "presents email contact information prominently (header)" do
+      expect(page.find('footer')).to have_selector('.email-info',      text: APP_CONFIG['contact_email_sales'])
+    end #case presents email contact info
 
-    it "presents a publication date (footer)"
+    it "presents street address in the footer" do
+      expect(page.find('footer')).to have_selector('.street',     text: APP_CONFIG['contact_address'])
+      expect(page.find('footer')).to have_selector('.suite',      text: APP_CONFIG['contact_suite'])
+    end #case street address
 
-    it "presents a last updated date (footer)"
+    it "presents city, state and zip in the footer" do
+      expect(page.find('footer')).to have_selector('.city',       text: APP_CONFIG['contact_city'])
+      expect(page.find('footer')).to have_selector('.state',      text: APP_CONFIG['contact_state'])
+      expect(page.find('footer')).to have_selector('.postal',     text: APP_CONFIG['contact_postal'])
+    end #case city state zip
 
-#TODO: Refactor to match config/config.yml value for copyright
-    it "presents a copyright notice (footer)" do
-      expect(page).to have_tag('footer') do
-        with_tag 'div.copyright', text: APP_CONFIG['copyright_notice']
-      end #have_tag
+    it "presents an Inherent Knowledge contact email as webmaster in the footer" do
+      expect(page.find('footer')).to have_selector('.webmaster',  text: '@inherent-knowledgellc.com')
+    end #case Inherent Knowledge contact
+
+    it "presents an Inherent Knowledge copyright notice" do
+      expect(page.find('.inh_kn_copy')).to have_content('C 2014 Inherent Knowledge, LLC.  All Rights Reserved.')
     end #case copyright
+
+    it "presents a publication date (footer)" do
+      expect(page.find('footer')).to have_selector('.publication',       text: '10/14/2014')
+    end #case publication date
 
   end #conforms to usability
 

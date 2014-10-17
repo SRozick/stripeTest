@@ -6,7 +6,7 @@
     %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1.0' }
     %link{ rel: 'canonical', href: canonical }
     %title
-      =title
+      = title
     %meta{ content: meta_description, name: 'description' }
     = stylesheet_link_tag    "application"
     = javascript_include_tag "vendor/modernizr"
@@ -14,14 +14,15 @@
   %body
     .off-canvas-wrap{ :'data-offcanvas' => true }
       .inner-wrap
-        %nav.tab-bar
-          %section.left-small
-            %a.left-off-canvas-toggle.menu-icon{ href: '#' }
-              %span
-          %section.middle.tab-bar-section
-            %h2.title
-              Inherent Knowledge
-        %nav.left-off-canvas-menu
+        %nav.tab-bar.hide-for-medium-up
+          .row
+            %section.left-small
+              %a.left-off-canvas-toggle.menu-icon{ href: '#' }
+                %span
+            %section.middle.tab-bar-section
+              %h2.title
+                Inherent Knowledge
+        %nav.left-off-canvas-menu.hide-for-medium-up
           %ul.off-canvas-list
             %li
               %label
@@ -48,25 +49,35 @@
         = yield
         .row
           %footer
-            .copyright
+            .inh_kn_copy
               = APP_CONFIG['copyright_notice']
-            .location
-              %span.street
-                = APP_CONFIG['contact_address']
-              %span.suite
-                = APP_CONFIG['contact_suite']
-              %p.city
-                = APP_CONFIG['contact_city']
-              %span.state
-                = APP_CONFIG['contact_state']
-              %span.postal
-                = APP_CONFIG['contact_postal']
-              %p.phone
+            .company-info{ itemscope: true, itemtype: "http://schema.org/Organization" }
+              .location-info
+                %span.company{ itemprop: "name"}
+                  = company
+                %br
+                %span.street{ itemprop: "streetAddress"}
+                  = APP_CONFIG['contact_address']
+                %span.suite
+                  = APP_CONFIG['contact_suite']
+                %br
+                %span.city{ itemprop: "addressLocality"}
+                  = APP_CONFIG['contact_city']
+                %span.state{ itemprop: "addressRegion"}
+                  = APP_CONFIG['contact_state']
+                %span.postal
+                  = APP_CONFIG['contact_postal']
+              .phone-info{ itemprop: "telephone"}
                 = APP_CONFIG['contact_phone']
-              %p.email
+              .email-info{ itemprop: "email"}
                 %a{href: "mailto:#{APP_CONFIG['contact_email_sales']} " }
-              %p.webmaster
-                %a{href: "mailto:#{APP_CONFIG['contact_email_web']} " }
-
+                  = APP_CONFIG['contact_email_sales']
+            .webmaster
+              %a{href: "mailto:#{APP_CONFIG['contact_email_web']} " }
+                = APP_CONFIG['contact_email_web']
+            .publication
+              Published:
+              %time{ pubdate: true, datetime: "2014-10-14" }
+                10/14/2014
         %a.exit-off-canvas
     = javascript_include_tag "application"

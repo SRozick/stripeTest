@@ -1,12 +1,31 @@
 module ApplicationHelper
 
-# Credit for title and meta_description helpers to David Lesches at
+# Partial credit for title and meta_description helpers to David Lesches at
 # http://davidlesches.com/blog/elegant-titles-and-seo-meta-tags-in-rails
   def title(title = nil)
     if title.present?
       content_for :title, title
     else
-      content_for?(:title) ? content_for(:title) + ' | ' +  APP_CONFIG['default_title'] : APP_CONFIG['default_title']
+      if APP_CONFIG['default_title'] == nil
+        default = APP_CONFIG['brand_name']
+      else
+        default = APP_CONFIG['default_title']
+      end #if
+      content_for?(:title) ? content_for(:title) + ' | ' +  default : default
+    end #if
+  end #title
+
+
+  def company(company = nil)
+    if company.present?
+      content_for :company, company
+    else
+      if APP_CONFIG['company_name'] == nil
+        default = APP_CONFIG['brand_name']
+      else
+        default = APP_CONFIG['company_name']
+      end #if
+      content_for?(:company) ? content_for(:company) + ' | ' +  default : default
     end #if
   end #title
 
@@ -25,5 +44,7 @@ module ApplicationHelper
       content_for?(:canonical) ? content_for(:canonical) : APP_CONFIG['default_canonical']
     end #if
   end #title
+
+
 
 end
