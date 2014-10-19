@@ -9,6 +9,8 @@ Spork.prefork do
   require File.expand_path("../../config/environment", __FILE__)
   require 'rspec/rails'
   require 'capybara/rspec'
+  require 'capybara/poltergeist'
+
   # Add additional requires below this line. Rails is not loaded until this point!
 # The Spork.prefork block is run only once when the spork server is started.
 # You typically want to place most of your (slow) initializer code in here, in
@@ -36,9 +38,25 @@ Spork.prefork do
     end # begin
   end #if
 
+  Capybara.default_selector = :css
+
   Capybara.configure do |config|
+    config.match = :prefer_exact
     config.ignore_hidden_elements = true
+  #  config.javascript_driver = :poltergeist
   end
+
+  Capybara.register_driver :poltergeist do |app|
+    Capybara::Poltergeist::Driver.new app, window_size: [1600, 1200]#[320, 480]
+  end
+
+  # Capybara.register_driver :selenium_firefox do |app|
+  #   Capybara::Selenium::Driver.new(app, :browser => :firefox)
+  # end
+
+  Capybara.default_driver = :poltergeist
+  Capybara.current_driver = :poltergeist
+  Capybara.javascript_driver = :poltergeist
 
   RSpec.configure do |config|
     config.fixture_path = "#{::Rails.root}/spec/fixtures"

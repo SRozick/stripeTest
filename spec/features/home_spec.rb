@@ -3,6 +3,7 @@ require 'spec_helper'
 require 'rails_helper'
 require 'rspec-html-matchers'
 
+
 RSpec.describe "the Home page" do
 
   before (:each) do
@@ -13,7 +14,7 @@ RSpec.describe "the Home page" do
     let(:meta_description) { "Is your website working for you\\? We specialize in e-commerce, SEO, and mobile design for small business.  Contact us for a free quote to help build your brand!" }
 
     it "has exactly one title tag" do
-      expect(page.body.scan(/<title>/).count).to be 1
+      expect(page.body.scan(/<title>/).count).to eq(1)
     end #case has one title
 
     it "has a title of Inherent Knowledge, LLC" do
@@ -25,28 +26,31 @@ RSpec.describe "the Home page" do
     end #case title_max length
 
     it "has exactly one <h1> tag" do
-      expect(page.body.scan(/<h1>/).count).to be 1
+      expect(page.body.scan(/<h1>/).count).to eq(1)
     end #case h1 tag
 
     it "has different text in the page title and h1 tags" do
       expect(page.title).to_not eq(page.find('h1').text)
     end #case different text
 
+#########################################
     it "has a meta description tag" do
-      expect(page.body.scan(/<meta.*name='description.*>/).count).to be 1
+      expect(page.body.scan(/<meta.*name="description.*>/).count).to eq(1)
     end #case meta desc tag
 
     it "has relevant meta description text" do
-      expect(page.body).to match(/<meta.*content='#{meta_description}'.*>/)
+      # expect(page.body).to match(/<meta.*content='#{meta_description}'.*>/)
+      expect(page.body).to match(/<meta.*content="#{meta_description}".*>/)
     end #meta desc text
 
     it "has a meta description of appropriate length" do
       expect(meta_description.length).to be <= 165
     end #case meta desc appropriate length
 
+# TODO: Check regex, behaves differently if "" and '' are reversed
     it "has a canonical link tag" do
-      expect(page.body.scan(/<link.*rel='canonical'.*>/).count).to be 1
-    end #case canonical
+      expect(page.body.scan(/<link rel ?= ?('canonical')|("canonical").*>/).count).to eq(1)
+    end #case
 
     it "links to at least 3 reputable other sites"
 
@@ -72,11 +76,12 @@ RSpec.describe "the Home page" do
   describe "conforms to usability recommendations" do
 
     it "has an alt attribute for every image" do
-      expect(page.body.scan(/<img.*>/).count).to be(page.body.scan(/<img.*alt='.*'.*>/).count)
+      expect(page.body.scan(/<img.*>/).count).to eq(page.body.scan(/<img.*alt=("|').*("|').*>/).count)
     end #case alt attribute on images
 
+##################################
     it "has an alt attribute for every video" do
-      expect(page.body.scan(/<video.*>/).count).to be(page.body.scan(/<video.*alt='.*'.*>/).count)
+      expect(page.body.scan(/<video.*>/).count).to be(page.body.scan(/<video.*alt=("|').*("|').*>/).count)
     end #case alt attribute on video
 
     it "presents phone contact information prominently (header)" do
@@ -138,10 +143,12 @@ RSpec.describe "the Home page" do
       end #have_tag
     end #case off-canvas menu
 
+###############################################
     it "goes to the Home page when the Home link is clicked" do
       visit root_path
       within ('nav.left-off-canvas-menu') do
-        click_link 'Home'
+        #click_on 'Home'
+        page.find('#sidebar-home').trigger(:click)
       end #within
       expect(page).to have_http_status(:success)
       expect(page).to have_content(/hello inherent knowledge/i)

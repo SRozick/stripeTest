@@ -14,37 +14,38 @@
   %body
     .off-canvas-wrap{ :'data-offcanvas' => true }
       .inner-wrap
-        %nav.tab-bar.hide-for-medium-up
-          .row
-            %section.left-small
-              %a.left-off-canvas-toggle.menu-icon{ href: '#' }
-                %span
-            %section.middle.tab-bar-section
-              %h2.title
-                Inherent Knowledge
-        %nav.left-off-canvas-menu.hide-for-medium-up
-          %ul.off-canvas-list
-            %li
-              %label
-                Inherent Knowledge
-            %li
-              %a{href: root_path }
-                Home
-            %li
-              %a{href: '#' }
-                Get a Quote
-            %li
-              %a{href: '#' }
-                Pricing
-            %li
-              %a{href: '#' }
-                Blog
-            %li
-              %a{href: '#' }
-                Services
-            %li
-              %a{href: '#' }
-                Portfolio
+        .hide-for-medium-up
+          %nav.tab-bar
+            .row
+              %section.left-small
+                %a.left-off-canvas-toggle.menu-icon{ href: '#' }
+                  %span
+              %section.middle.tab-bar-section
+                %h2.title
+                  Inherent Knowledge
+          %nav.left-off-canvas-menu
+            %ul.off-canvas-list
+              %li
+                %label
+                  Inherent Knowledge
+              %li
+                %a#sidebar-home{href: root_path }
+                  Home
+              %li
+                %a{href: '#' }
+                  Get a Quote
+              %li
+                %a{href: '#' }
+                  Pricing
+              %li
+                %a{href: '#' }
+                  Blog
+              %li
+                %a{href: '#' }
+                  Services
+              %li
+                %a{href: '#' }
+                  Portfolio
         %section.main-section
         = yield
         .row

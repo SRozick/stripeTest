@@ -41,6 +41,7 @@ group :development, :test do
   gem 'rack-livereload'
   gem 'rspec-html-matchers'
   gem 'poltergeist'
+  gem 'phantomjs', require: 'phantomjs/poltergeist'
 end
 
 group :test do
