@@ -6,7 +6,12 @@ require 'rspec-html-matchers'
 
 RSpec.describe "the Home page" do
 
-  before (:each) do
+  before (:each) do |example|
+    # if example.metadata[:mobile]
+    #   resize_browser_window(MOBILE_SCREENSIZE)
+    # else
+    #   resize_browser_window(DESKTOP_SCREENSIZE)
+    # end #if metadata
     visit root_path
   end #before
 
