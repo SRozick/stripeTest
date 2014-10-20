@@ -146,10 +146,10 @@ RSpec.describe "the Home page" do
 ###############################################
     it "goes to the Home page when the Home link is clicked" do
       visit root_path
-      within ('nav.left-off-canvas-menu') do
-        #click_on 'Home'
-        page.find('#sidebar-home').trigger(:click)
-      end #within
+      page.find('nav').click_link('Home')
+      # within ('nav.left-off-canvas-menu') do
+        # page.find('Home').trigger(:click)
+      # end #within
       expect(page).to have_http_status(:success)
       expect(page).to have_content(/hello inherent knowledge/i)
     end #case Home link

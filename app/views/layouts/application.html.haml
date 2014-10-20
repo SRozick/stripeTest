@@ -14,11 +14,19 @@
   %body
     .off-canvas-wrap{ :'data-offcanvas' => true }
       .inner-wrap
+        .show-for-medium-up
+          %nav.icon-bar.six-up
+            =link_to "Home", root_path, class: "item"
+            =link_to "Get a Quote", root_path, class: "item"
+            =link_to "Pricing", root_path, class: "item"
+            =link_to "Blog", root_path, class: "item"
+            =link_to "Services", root_path, class: "item"
+            =link_to "Portfolio", root_path, class: "item"
         .hide-for-medium-up
           %nav.tab-bar
             .row
               %section.left-small
-                %a.left-off-canvas-toggle.menu-icon{ href: '#' }
+                =link_to('#', class: "left-off-canvas-toggle menu-icon") do
                   %span
               %section.middle.tab-bar-section
                 %h2.title

@@ -47,7 +47,10 @@ Spork.prefork do
   end
 
   Capybara.register_driver :poltergeist do |app|
-    Capybara::Poltergeist::Driver.new app, window_size: [1600, 1200]#[320, 480]
+    # Test mobile browser at 320 x 480
+    Capybara::Poltergeist::Driver.new app, window_size: [320, 480]
+    # Test large browser at 1600 x 1200
+    #Capybara::Poltergeist::Driver.new app, window_size: [1600, 1200]
   end
 
   # Capybara.register_driver :selenium_firefox do |app|
