@@ -15,7 +15,7 @@
     .off-canvas-wrap{ :'data-offcanvas' => true }
       .inner-wrap
         .show-for-medium-up
-          %nav.icon-bar.six-up
+          %nav.icon-bar.six-up.main_nav
             =link_to "Home", root_path, class: "item"
             =link_to "Get a Quote", root_path, class: "item"
             =link_to "Pricing", root_path, class: "item"
@@ -23,22 +23,21 @@
             =link_to "Services", root_path, class: "item"
             =link_to "Portfolio", root_path, class: "item"
         .hide-for-medium-up
-          %nav.tab-bar
+          %nav.tab-bar.main_nav
             .row
               %section.left-small
-                =link_to('#', class: "left-off-canvas-toggle menu-icon") do
+                =link_to('#', class: "left-off-canvas-toggle menu-icon", id: "expose_mobile_nav") do
                   %span
               %section.middle.tab-bar-section
                 %h2.title
                   Inherent Knowledge
-          %nav.left-off-canvas-menu
+          %nav.left-off-canvas-menu.main_nav
             %ul.off-canvas-list
               %li
                 %label
                   Inherent Knowledge
               %li
-                %a#sidebar-home{href: root_path }
-                  Home
+                =link_to "Home", root_path
               %li
                 %a{href: '#' }
                   Get a Quote
@@ -59,7 +58,7 @@
         .row
           %footer
             .inh_kn_copy
-              = APP_CONFIG['copyright_notice']
+              = APP_CONFIG['inh_kn_copy']
             .company-info{ itemscope: true, itemtype: "http://schema.org/Organization" }
               .location-info
                 %span.company{ itemprop: "name"}

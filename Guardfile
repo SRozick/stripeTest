@@ -12,9 +12,10 @@ guard 'spork', :cucumber_env => { 'RAILS_ENV' => 'test' }, :rspec_env => { 'RAIL
   watch('config/environments/test.rb')
   watch(%r{^config/initializers/.+\.rb$})
   watch('Gemfile.lock')
-  watch('spec/spec_helper.rb') { :rspec }
-  # watch('test/test_helper.rb') { :test_unit }
-  watch(%r{features/support/}) { :cucumber }
+  watch(%r{spec/shared_examples})       { :rspec }
+  watch('spec/spec_helper.rb')          { :rspec }
+  # watch('test/test_helper.rb')        { :test_unit }
+  watch(%r{features/support/})          { :cucumber }
 end
 
 # Note: The -drb option for rspec is required for spork to run properly
@@ -24,6 +25,7 @@ guard :rspec, cmd: 'bundle exec rspec --drb' do
   watch(%r{^lib/(.+)\.rb$})                                       { |m| "spec/lib/#{m[1]}_spec.rb" }
   watch('spec/spec_helper.rb')                                    { "spec" }
   watch('config/config.yml')                                      { "spec" }
+  watch(%r{spec/shared_examples})                                 { "spec" }
   # Rails example
   watch(%r{^app/(.+)\.rb$})                                       { |m| "spec/#{m[1]}_spec.rb" }
   watch(%r{^app/(.*)(\.erb|\.haml|\.slim)$})                      { |m| "spec/#{m[1]}#{m[2]}_spec.rb" }

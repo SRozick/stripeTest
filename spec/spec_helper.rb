@@ -11,11 +11,10 @@ Spork.prefork do
   require 'capybara/rspec'
   require 'capybara/poltergeist'
 
-  # Add additional requires below this line. Rails is not loaded until this point!
-# The Spork.prefork block is run only once when the spork server is started.
-# You typically want to place most of your (slow) initializer code in here, in
-# particular, require'ing any 3rd-party gems that you don't normally modify
-# during development.
+# Shared examples
+  Dir[Rails.root.join("spec/shared_examples/**/*.rb")].each {|f| require f}
+
+
   if $LOADED_FEATURES.grep(/spec\/spec_helper\.rb/).any?
     begin
       raise "foo"
@@ -46,22 +45,22 @@ Spork.prefork do
   end #Capybara.configure
 
   Capybara.register_driver :poltergeist do |app|
-    # Test mobile browser at 320 x 480
-    Capybara::Poltergeist::Driver.new app, window_size: [320, 480]
-    # Test large browser at 1600 x 1200
-    #Capybara::Poltergeist::Driver.new app, window_size: [1600, 1200]
+    Capybara::Poltergeist::Driver.new app
   end #end Capybara.register_driver
 
-  # Capybara.register_driver :selenium_firefox do |app|
-  #   Capybara::Selenium::Driver.new(app, :browser => :firefox)
-  # end
+  Capybara.register_driver :selenium_firefox do |app|
+    Capybara::Selenium::Driver.new(app, :browser => :firefox)
+  end
 
   Capybara.default_driver = :poltergeist
   Capybara.current_driver = :poltergeist
   Capybara.javascript_driver = :poltergeist
 
-  DESKTOP_SCREENSIZE = { :width => 1280, :height => 1024 }
-  MOBILE_SCREENSIZE  = { :width => 320, :height => 480 }
+  MOBILE_SCREENSIZE  = { :width => 320,  :height => 480  }
+  TABLET_SCREENSIZE  = { :width => 600,  :height => 1024 }
+  LAPTOP_SCREENSIZE  = { :width => 1024, :height => 768  }
+  DESKTOP_SCREENSIZE = { :width => 1440, :height => 900  }
+  OVERSIZE_SCREEN    = { :width => 1921, :height => 1200 }
 
   RSpec.configure do |config|
     config.use_transactional_fixtures = false
@@ -84,16 +83,34 @@ Spork.prefork do
     config.order = :random
     Kernel.srand config.seed
 
+# allow for dynamic resizing of windows persuant to responsive layout
+# see http://blaulabs.de/2011/11/22/acceptance-testing-with-responsive-layouts/
     config.before (:each) do |example|
       if example.metadata[:mobile]
         resize_browser_window(MOBILE_SCREENSIZE)
-      else
+      elsif example.metadata[:tablet]
+        resize_browser_window(TABLET_SCREENSIZE)
+      elsif example.metadata[:laptop]
+        resize_browser_window(LAPTOP_SCREENSIZE)
+      elsif example.metadata[:desktop]
         resize_browser_window(DESKTOP_SCREENSIZE)
+      elsif example.metadata[:oversize]
+        resize_browser_window(OVERSIZE_SCREEN)
+      else
+        resize_browser_window(MOBILE_SCREENSIZE)
       end #if metadata
     end #before each
 
+# avoid memory leaks per Poltergeist/ Capy docs
     config.after (:all) do |example|
       Capybara.session.driver.quit
+      {
+        mobile: false,
+        tablet: false,
+        laptop: false,
+        desktop: false,
+        oversize: false
+      }
     end #after all
 
   end #RSpec configure do
