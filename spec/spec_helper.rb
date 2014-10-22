@@ -103,7 +103,7 @@ Spork.prefork do
 
 # avoid memory leaks per Poltergeist/ Capy docs
     config.after (:all) do |example|
-      Capybara.session.driver.quit
+      # Capybara.session.driver.quit
       {
         mobile: false,
         tablet: false,
@@ -128,4 +128,4 @@ Spork.each_run do
 #  require 'support/database_cleaner'
   ActiveRecord::Migration.maintain_test_schema!
 
-end
+end #spork each run

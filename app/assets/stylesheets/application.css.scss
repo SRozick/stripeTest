@@ -13,7 +13,8 @@
  * Foundation files can be found at
  * /home/srozick/.rvm/gems/ruby-2.1.2@stripeTest/gems/foundation-rails-5.4.5.0/vendor/assets
  *
+ *= require foundation_and_overrides
  *= require_tree .
  *= require_self
- *= require foundation_and_overrides
+ *= require static.css.sass
  */

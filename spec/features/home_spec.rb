@@ -12,10 +12,6 @@ RSpec.describe "the Home page", mobile: true do
   it_behaves_like "a page that is SEO-compliant"
   it_behaves_like "a page with a standard footer"
 
-  it "links to at least 3 reputable other sites"
-
-  it "uses microdata markup to indicate hours of operation, and products"
-
   it "uses microdata markup to indicate location"  do
     expect(page).to have_tag('footer') do
       with_tag '.location-info'
@@ -35,13 +31,13 @@ RSpec.describe "the Home page", mobile: true do
 
     it "links to blog, portfolio, services, and contact pages (menu)" do
       expect(page).to have_tag('nav.tab-bar') do
-        with_tag 'section.left-small'
+        with_tag '.left-small'
       end #have_tag
     end #case menu
 
     it "has an accessible left side menu" do
       expect(page).to have_tag('nav.tab-bar') do
-        with_tag 'section.left-small'
+        with_tag '.left-small'
       end #have_tag
     end #case left side menu
 
@@ -68,10 +64,6 @@ RSpec.describe "the Home page", mobile: true do
       expect(page).to have_http_status(:success)
       expect(page).to have_content(/hello inherent knowledge/i)
     end #case Home link
-
-    it "links to home page" do
-      expect(page).to have_link("Home")
-    end #case menu
 
     it "links to contact page" do
       expect(page).to have_link("Get a Quote")
@@ -102,6 +94,8 @@ RSpec.describe "the Home page", mobile: true do
     it "has a flex background video on initial load"
 
     it "provides an animated gif for mobile use"
+
+    it "adheres to accessibility recommendations"
 
   end #main content
 end #the Home page
