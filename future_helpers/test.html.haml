@@ -1,0 +1,163 @@
+!!!
+%html
+  %head
+    = stylesheet_link_tag    "application"
+    = javascript_include_tag "vendor/modernizr"
+    = csrf_meta_tags
+  %body
+    %header
+      .row
+        .small-12.medium-12.large-12.columns
+          .logo
+            %h1
+              Foundation 5 Topbar / Offcanvas menu
+
+    -#-- LARGE SCREEN TOP BAR MENU -->
+    %section.navigation-section.show-for-large-up
+      .row
+        .large-12.columns
+          -#-- TOP BAR INITIALIZATION -->
+          %nav.top-bar{ :'data-topbar' => true }
+            %ul.title-area
+              %li.name
+                %h1
+          -#-- TOP BAR MENU ELEMENTS -->
+          %section.top-bar-section
+            %ul.left
+              %li.active
+                =link_to "Home", root_path
+              %li.has-dropdown
+                =link_to "Blog", '#'
+                %ul.dropdown
+                  %li
+                    =link_to "Archive", '#'
+                  %li
+                    =link_to "Single", '#'
+              %li.has-dropdown
+                =link_to "Page", '#'
+                %ul.dropdown
+                  %li
+                    =link_to "Full-width", '#'
+                  %li
+                    =link_to "Left Sidebar", '#'
+                  %li
+                    =link_to "Right Sidebar", '#'
+              %li
+                =link_to "Portfolio", '#'
+              %li.has-dropdown
+                =link_to "Dropdown", '#'
+                %ul.dropdown
+                  %li
+                    =link_to "First link in dropdown", '#'
+                  %li
+                    =link_to "Second link in dropdown", '#'
+                  %li
+                    =link_to "Third link in dropdown", '#'
+    -#-- OFF CANVAS SECTIONS WRAPPING THE MAIN CONTENT -->
+    .off-canvas-wrap
+      .inner-wrap
+        -#-- OFF CANVAS MENU BAR -->
+        %nav.tab-bar.hide-for-large-up
+          %section.left-small
+            =link_to('#', class: "left-off-canvas-toggle menu-icon") do
+              %span
+          %section.right.tab-bar-section
+            %h1.title
+              Menu
+        -#-- OFF CANVAS MENU -->
+        %aside.left-off-canvas-menu
+          %ul.off-canvas-list
+            %li
+              %label
+                Navigation
+            %li.active
+              =link_to "Home", root_path
+            %li.has-dropdown
+              =link_to "Blog", '#'
+              %ul.dropdown
+                %li
+                  =link_to "Archive", '#'
+                %li
+                  =link_to "Single", '#'
+            %li.has-dropdown
+              =link_to "Page", '#'
+              %ul.dropdown
+                %li
+                  =link_to "Full-width", '#'
+                %li
+                  =link_to "Left Sidebar", '#'
+                %li
+                  =link_to "Right Sidebar", '#'
+            %li
+              =link_to "Portfolio", '#'
+            %li.has-dropdown
+              =link_to "Dropdown", '#'
+              %ul.dropdown
+                %li
+                  =link_to "First link in dropdown", '#'
+                %li
+                  =link_to "Second link in dropdown", '#'
+                %li
+                  =link_to "Third link in dropdown", '#'
+        -#-- MAIN SECTION -->
+        %section.main-section
+          -#--CONTENT SECTION -->
+          %section.full-width.content-section
+            .row
+              .small-12.medium-12.large-12.columns
+                %h2
+                  Moving aside for the Offcanvas people!
+                %p
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae, minus molestias dolores blanditiis esse? Quam, accusamus, quo, eum, ipsum voluptatibus aliquam perspiciatis qui porro est sit eligendi suscipit. Expedita, eligendi, laboriosam animi itaque accusantium repudiandae dicta ullam quia ipsum amet quam nesciunt non! Porro, fuga molestiae quaerat accusantium nesciunt omnis.
+                %p
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero, minima, quidem repellendus facilis dignissimos laboriosam doloribus sequi tempora iusto facere maxime quasi est ex qui commodi nobis aliquid id eius magnam consectetur. Ut deserunt repellat asperiores dolores odio! Incidunt, esse, distinctio modi ratione facilis iusto tempora saepe nisi nostrum culpa velit eaque quos dolore repellat facere accusamus architecto iure similique numquam autem asperiores error cumque eum. Dolor, minima aspernatur autem eaque ipsa officiis rem! Suscipit, esse, quos. Quos, perferendis, iure nobis modi perspiciatis enim error nulla asperiores dignissimos harum. Dolor, non rem in nobis illum id hic laboriosam blanditiis aliquid!
+          -#-- SERVICES SECTION -->
+          %section.full-width.services-section
+            .row
+              .small-12.medium-4.large-4.columns
+                %h3
+                  Service #1
+                %p
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus, veniam, asperiores fugit quas quaerat soluta in quibusdam placeat incidunt suscipit esse neque quisquam eaque rem!
+              .small-12.medium-4.large-4.columns
+                %h3
+                  Service #3
+                %p
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam, nihil nemo tempore voluptatum veritatis corrupti id doloremque. Saepe, in sequi voluptatem impedit rem omnis aliquam?
+              .small-12.medium-4.large-4.columns
+                %h3
+                  Service #3
+                %p
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate ducimus aut commodi eius! Sequi, magni labore ea iusto quibusdam autem repellendus ipsum dolorem quasi maxime!
+          -#-- CALL 2 ACTION -->
+          %section.full-width.call-to-action
+            .row
+              .small-12.medium-12.large-12.columns
+                =link_to "Get in touch with us!", "#", class: "button.radius"
+      -#-- CLOSE THE OFF-CANVAS MENU -->
+      =link_to "#", class: "exit-off-canvas"
+    -#-- FOOTER SECTION -->
+    %footer
+      .row
+        .small-12.medium-4.large-4.columns
+          %h4
+            Foundation
+          %p
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus, veniam, asperiores fugit quas quaerat soluta in quibusdam placeat incidunt suscipit esse neque quisquam eaque rem!
+        .small-12.medium-4.large-4.columns
+          %h4
+            Foundation
+          %p
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus, veniam, asperiores fugit quas quaerat soluta in quibusdam placeat incidunt suscipit esse neque quisquam eaque rem!
+        .small-12.medium-4.large-4.columns
+          %h4
+            Foundation
+          %p
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Natus, veniam, asperiores fugit quas quaerat soluta in quibusdam placeat incidunt suscipit esse neque quisquam eaque rem!
+    -#-- COPYRIGHT SECTION -->
+    %section.full-width.copyright-section
+      .row
+        .small-12.columns
+          %p
+            &copy; 2014
+    = javascript_include_tag "application"

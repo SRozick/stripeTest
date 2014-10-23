@@ -5,21 +5,24 @@
 // TODO: Investigate usefulness of Data URI feature
 // See asset_data_uri helper for .erb files and the Rails asset pipeline at
 // http://guides.rubyonrails.org/asset_pipeline.html
+@import 'foundation_and_overrides'
+// .video-bkg-container video
+//   position    : fixed
+//   position:     absolute
+//   overflow    : hidden
+//   min-width   : 100%
+//   min-height  : 100%
+//   widows      : auto
+//   height      : auto
+//   z-index     : -100
+//   right       : 0
+//   bottom      : 0
 
-.video-bkg-container video
-  position:   fixed
-  overflow:   hidden
-  min-width:  100%
-  min-height: 100%
-  width:      auto
-  height:     auto
-  z-index:    -100
-  right:      0
-  bottom:     0
+.intro-section
+  min-height  : 480px
 
-.video-overlay-content
-  min-height:   480px
-  z-index:      -1
+.navigation-section
+  background-color: $icon-bar-bg
 
 // div {
 // position:fixed !important;

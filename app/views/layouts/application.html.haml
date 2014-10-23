@@ -12,74 +12,80 @@
     = javascript_include_tag "vendor/modernizr"
     = csrf_meta_tags
   %body
+    .row
+      %header.masthead.small-12.columns
+        %h2 Inherent Knowledge- Intelligent Business Web Design
+    -# ----   Navigation Menus    ---- #
+      -# On-canvas
+    %section.navigation-section.show-for-medium-up
+      .row
+        %nav.medium-12.columns.icon-bar.six-up{ :'aria-hidden' => true }
+          =link_to "Home", root_path, class: "item"
+          =link_to "Get a Quote", root_path, class: "item"
+          =link_to "Pricing", root_path, class: "item"
+          =link_to "Blog", root_path, class: "item"
+          =link_to "Services", root_path, class: "item"
+          =link_to "Portfolio", root_path, class: "item"
+    -# Off-canvas
     .off-canvas-wrap{ :'data-offcanvas' => true }
       .inner-wrap
-        .show-for-medium-up{ :'aria-hidden' => true }
-          %nav.icon-bar.six-up.main_nav
-            =link_to "Home", root_path, class: "item"
-            =link_to "Get a Quote", root_path, class: "item"
-            =link_to "Pricing", root_path, class: "item"
-            =link_to "Blog", root_path, class: "item"
-            =link_to "Services", root_path, class: "item"
-            =link_to "Portfolio", root_path, class: "item"
-        .hide-for-medium-up
-          .fixed
-            %nav.tab-bar.main_nav{ role: 'navigation' }
-              .left-small
-                =link_to('#', class: "left-off-canvas-toggle menu-icon", id: "expose_mobile_nav", role: 'button', :'aria-expanded' => false, :'aria-controls' => 'idOfMenu') do
-                  %span
-              %section.middle.tab-bar-section
-                %h2.title
-                  Inherent Knowledge
-          .hold_to_top
-            %nav.left-off-canvas-menu.main_nav
-              %ul.off-canvas-list
-                %li
-                  %label
-                    Inherent Knowledge
-                %li
-                  =link_to "Home", root_path
-                %li
-                  =link_to "Get a Quote", '#'
-                %li
-                  =link_to "Pricing", '#'
-                %li
-                  =link_to "Blog", '#'
-                %li
-                  =link_to "Services", '#'
-                %li
-                  =link_to "Portfolio", '#'
+        %nav.tab-bar.hide-for-medium-up{ role: 'navigation' }
+          .left-small
+            =link_to('#', class: "left-off-canvas-toggle menu-icon", id: "expose_mobile_nav", role: 'button', :'aria-expanded' => false, :'aria-controls' => 'idOfMenu') do
+              %span
+          .right.tab-bar-section
+            %h2.title
+              Inherent Knowledge
+        %nav.left-off-canvas-menu.main_nav
+          %ul.off-canvas-list
+            %li
+              %label
+                Inherent Knowledge
+            %li
+              =link_to "Home", root_path
+            %li
+              =link_to "Get a Quote", '#'
+            %li
+              =link_to "Pricing", '#'
+            %li
+              =link_to "Blog", '#'
+            %li
+              =link_to "Services", '#'
+            %li
+              =link_to "Portfolio", '#'
+        -# ----   Body Content     ---- #
         %section.main-section
-        = yield
-        .row
-          %footer
-            .company-info{ itemscope: true, itemtype: "http://schema.org/Organization" }
-              .location-info
-                %span.company{ itemprop: "name"}
-                  = company
-                %br
-                %span.street{ itemprop: "streetAddress"}
-                  = APP_CONFIG['contact_address']
-                %span.suite
-                  = APP_CONFIG['contact_suite']
-                %br
-                %span.city{ itemprop: "addressLocality"}
-                  = APP_CONFIG['contact_city']
-                %span.state{ itemprop: "addressRegion"}
-                  = APP_CONFIG['contact_state']
-                %span.postal
-                  = APP_CONFIG['contact_postal']
-              .phone-info{ itemprop: "telephone"}
-                = APP_CONFIG['contact_phone']
-              .email-info{ itemprop: "email"}
-                =link_to APP_CONFIG['contact_email_sales'], "mailto:#{APP_CONFIG['contact_email_sales']} "
-            .webmaster
-              =link_to APP_CONFIG['contact_email_web'], "mailto:#{APP_CONFIG['contact_email_web']} "
-            .publication
-              Published:
-              %time{ pubdate: true, datetime: "2014-10-14" }
-                10/14/2014
-            .inh_kn_copy
-              = APP_CONFIG['inh_kn_copy']
+          = yield
         %a.exit-off-canvas
+    -# ----   Footer Section    ---- #
+    .row
+      %footer
+        .company-info{ itemscope: true, itemtype: "http://schema.org/Organization" }
+          .location-info
+            %span.company{ itemprop: "name"}
+              = company
+            %br
+            %span.street{ itemprop: "streetAddress"}
+              = APP_CONFIG['contact_address']
+            %span.suite
+              = APP_CONFIG['contact_suite']
+            %br
+            %span.city{ itemprop: "addressLocality"}
+              = APP_CONFIG['contact_city']
+            %span.state{ itemprop: "addressRegion"}
+              = APP_CONFIG['contact_state']
+            %span.postal
+              = APP_CONFIG['contact_postal']
+          .phone-info{ itemprop: "telephone"}
+            = APP_CONFIG['contact_phone']
+          .email-info{ itemprop: "email"}
+            =link_to APP_CONFIG['contact_email_sales'], "mailto:#{APP_CONFIG['contact_email_sales']} "
+        .webmaster
+          =link_to APP_CONFIG['contact_email_web'], "mailto:#{APP_CONFIG['contact_email_web']} "
+        .publication
+          Published:
+          %time{ pubdate: true, datetime: "2014-10-14" }
+            10/14/2014
+        .inh_kn_copy
+          = raw APP_CONFIG['inh_kn_copy']
     = javascript_include_tag "application"
