@@ -20,13 +20,32 @@
       -# On-canvas
     %section.navigation-section.show-for-medium-up
       .row
-        %nav.medium-12.columns.icon-bar.six-up{ :'aria-hidden' => true }
-          =link_to "Home", root_path, class: "item"
-          =link_to "Get a Quote", root_path, class: "item"
-          =link_to "Pricing", root_path, class: "item"
-          =link_to "Blog", root_path, class: "item"
-          =link_to "Services", root_path, class: "item"
-          =link_to "Portfolio", root_path, class: "item"
+        %nav
+          %ul.medium-12.columns.icon-bar.six-up{ :'aria-hidden' => true }
+            %li.item
+              =link_to root_path do
+                %i.icon-home
+                %label Home
+            %li.item
+              =link_to root_path do
+                %i.icon-home
+                %label Get a Quote
+            %li.item
+              =link_to root_path do
+                %i.icon-home
+                %label Pricing
+            %li.item
+              =link_to root_path do
+                %i.icon-home
+                %label Blog
+            %li.item
+              =link_to root_path do
+                %i.icon-home
+                %label Services
+            %li.item
+              =link_to root_path do
+                %i.icon-home
+                %label Portfolio
     -# Off-canvas
     .off-canvas-wrap{ :'data-offcanvas' => true }
       .fixed.off-canvas-fixed
@@ -42,18 +61,30 @@
             %li
               %label
                 Navigation
-            %li
-              =link_to "Home", root_path
-            %li
-              =link_to "Get a Quote", '#'
-            %li
-              =link_to "Pricing", '#'
-            %li
-              =link_to "Blog", '#'
-            %li
-              =link_to "Services", '#'
-            %li
-              =link_to "Portfolio", '#'
+            %li.item
+              =link_to root_path do
+                %i.icon-beehive
+                %label Home
+            %li.item
+              =link_to root_path do
+                %i.icon-happy-waiting-bee
+                %label Get a Quote
+            %li.item
+              =link_to root_path do
+                %i.icon-home
+                %label Pricing
+            %li.item
+              =link_to root_path do
+                %i.icon-home
+                %label Blog
+            %li.item
+              =link_to root_path do
+                %i.icon-home
+                %label Services
+            %li.item
+              =link_to root_path do
+                %i.icon-home
+                %label Portfolio
       .inner-wrap
         %a.exit-off-canvas
 
