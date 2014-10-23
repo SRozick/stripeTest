@@ -1,0 +1,22 @@
+/* TEAM */
+
+Team:       Inherent Knowledge, LLC
+Developer:  Steve Rozick
+
+Location:   Jacksonville, FL
+
+/* THANKS */
+
+Name: David Govea
+Link: http://foundation.zurb.com/forum/posts/547-off-canvas-with-fixed-top-bar?page=2
+
+
+/* SITE */
+
+Last update: YYYY/MM/DD
+
+Standards: HTML5, CSS3
+
+Components: Modernizr, jQuery, Foundation, Rails
+
+Software: Sublime, Ubuntu, Photoshop, Illustrator, Chrome, Firefox
