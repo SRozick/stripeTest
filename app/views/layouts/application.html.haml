@@ -5,6 +5,7 @@
     %meta{ charset: 'utf-8' }
     %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1.0' }
     %link{ rel: 'canonical', href: canonical }
+    %link{ rel: 'author', href: '//humans.txt'}
     %title
       = title
     %meta{ content: meta_description, name: 'description' }
@@ -13,7 +14,7 @@
     = csrf_meta_tags
   %body
     .row
-      %header.masthead.small-12.columns
+      %header.masthead.medium-12.columns.show-for-medium-up
         %h2 Inherent Knowledge- Intelligent Business Web Design
     -# ----   Navigation Menus    ---- #
       -# On-canvas
@@ -28,7 +29,7 @@
           =link_to "Portfolio", root_path, class: "item"
     -# Off-canvas
     .off-canvas-wrap{ :'data-offcanvas' => true }
-      .inner-wrap
+      .fixed.off-canvas-fixed
         %nav.tab-bar.hide-for-medium-up{ role: 'navigation' }
           .left-small
             =link_to('#', class: "left-off-canvas-toggle menu-icon", id: "expose_mobile_nav", role: 'button', :'aria-expanded' => false, :'aria-controls' => 'idOfMenu') do
@@ -40,7 +41,7 @@
           %ul.off-canvas-list
             %li
               %label
-                Inherent Knowledge
+                Navigation
             %li
               =link_to "Home", root_path
             %li
@@ -53,10 +54,13 @@
               =link_to "Services", '#'
             %li
               =link_to "Portfolio", '#'
-        -# ----   Body Content     ---- #
+      .inner-wrap
+        %a.exit-off-canvas
+
+        -# ----    Main Content    ---- #
         %section.main-section
           = yield
-        %a.exit-off-canvas
+
     -# ----   Footer Section    ---- #
     .row
       %footer

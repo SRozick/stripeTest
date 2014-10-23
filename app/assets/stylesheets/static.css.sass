@@ -24,12 +24,20 @@
 .navigation-section
   background-color: $icon-bar-bg
 
-// div {
-// position:fixed !important;
-// position:absolute;
-// top:0;
-// right:0;
-// bottom:0;
-// left:0;
-// }
+.off-canvas-fixed
+  // deals with behavior of fixed-off-canvas menu
+  -webkit-transition:   -webkit-transform 500ms ease
+  transition:           transform 500ms ease
+
+.move-right > .off-canvas-fixed
+  // deals with behavior of fixed-off-canvas menu
+  height: 100%
+  -webkit-transform:    translate3d(15.625rem, 0,0)
+  transform:            translate3d(15.625rem, 0,0)
+
+.left-off-canvas-menu
+  // deals with behavior of fixed-off-canvas-menu
+  -webkit-transform:    none
+  transform:            none
+  margin-left:          -15.625rem
 

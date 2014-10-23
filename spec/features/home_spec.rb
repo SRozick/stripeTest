@@ -1,5 +1,15 @@
 require 'rspec-html-matchers'
 
+#TODO: Convert menus so they can be stubbed for ease of maintenance
+#TODO: Fix video background and poster
+#TODO: Video background overlay to improve menu visibility
+#TODO: Get icon font working
+#TODO: Section content
+#TODO: <Not critical> Nav menu on main page that scrolls up and fixes to top, or expandable sidebar menu
+#TODO: Style and stub header and footer
+#TODO: Content for other sections
+#TODO: Colorize and fonts
+
 RSpec.describe "the Home page", mobile: true do
   before (:each) do
     visit root_path
@@ -43,7 +53,7 @@ RSpec.describe "the Home page", mobile: true do
 
     it "has an off-canvas left menu" do
       expect(page).to have_tag('nav.left-off-canvas-menu') do
-        with_tag 'label',         text: /Inherent Knowledge/
+        with_tag 'label',         text: /Navigation/
         with_tag 'a',             text: /Home/
         with_tag 'a',             text: /Get a Quote/
         with_tag 'a',             text: /Pricing/
