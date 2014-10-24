@@ -9,6 +9,11 @@ Location:   Jacksonville, FL
 
 Name: David Govea
 Link: http://foundation.zurb.com/forum/posts/547-off-canvas-with-fixed-top-bar?page=2
+Why: Solved odd behaviour of Foundation 5 off-canvas-nav bar, allowing sidebar to remain visible and fixed while page was scrolled.
+
+Name: Dudley Storey
+Link: http://demosthenes.info/blog/777/Create-Fullscreen-HTML5-Page-Background-Video
+Why: The only CSS solution (of many) for responsive background video that actually worked!  Bonus points for links to JS options
 
 
 /* SITE */

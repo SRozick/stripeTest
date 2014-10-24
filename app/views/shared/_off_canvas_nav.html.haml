@@ -1,0 +1,16 @@
+-# Off-canvas
+.fixed.off-canvas-fixed
+  %nav.tab-bar.hide-for-medium-up{ role: 'navigation' }
+    .left-small
+      =link_to('#', class: "left-off-canvas-toggle menu-icon", id: "expose_mobile_nav", role: 'button', :'aria-expanded' => false, :'aria-controls' => 'idOfMenu') do
+        %span
+    .right.tab-bar-section
+      %h2.title
+        Inherent Knowledge
+  %nav.left-off-canvas-menu.main_nav
+    %ul.off-canvas-list
+      %li
+        =link_to '#', id: 'off-canvas-title' do
+          %label Navigation
+      =render "shared/menu_items"
+

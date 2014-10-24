@@ -1,9 +1,7 @@
 require 'rspec-html-matchers'
 
-#TODO: Convert menus so they can be stubbed for ease of maintenance
 #TODO: Fix video background and poster
 #TODO: Video background overlay to improve menu visibility
-#TODO: Get icon font working
 #TODO: Section content
 #TODO: <Not critical> Nav menu on main page that scrolls up and fixes to top, or expandable sidebar menu
 #TODO: Style and stub header and footer

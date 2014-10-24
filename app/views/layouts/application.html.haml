@@ -2,125 +2,27 @@
 -# see helper methods in app/helpers/application_helper.rb
 %html(lang="en")
   %head
-    %meta{ charset: 'utf-8' }
-    %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1.0' }
-    %link{ rel: 'canonical', href: canonical }
-    %link{ rel: 'author', href: '//humans.txt'}
-    %title
-      = title
-    %meta{ content: meta_description, name: 'description' }
-    = stylesheet_link_tag    "application"
-    = javascript_include_tag "vendor/modernizr"
-    = csrf_meta_tags
+    =render "shared/head"
+
   %body
-    .row
-      %header.masthead.medium-12.columns.show-for-medium-up
-        %h2 Inherent Knowledge- Intelligent Business Web Design
-    -# ----   Navigation Menus    ---- #
-      -# On-canvas
-    %section.navigation-section.show-for-medium-up
-      .row
-        %nav
-          %ul.medium-12.columns.icon-bar.six-up{ :'aria-hidden' => true }
-            %li.item
-              =link_to root_path do
-                %i.icon-home
-                %label Home
-            %li.item
-              =link_to root_path do
-                %i.icon-home
-                %label Get a Quote
-            %li.item
-              =link_to root_path do
-                %i.icon-home
-                %label Pricing
-            %li.item
-              =link_to root_path do
-                %i.icon-home
-                %label Blog
-            %li.item
-              =link_to root_path do
-                %i.icon-home
-                %label Services
-            %li.item
-              =link_to root_path do
-                %i.icon-home
-                %label Portfolio
-    -# Off-canvas
+    .video-bkg-container
+      =video_tag ['3724946.webm', '3724946.ogg', '3724946.mp4', 'workingcomp800x530.jpg'], autoplay: true, loop: true, muted: true, poster: 'workingcomp800x530.jpg', id: 'top-video', alt: 'Video background for Inherent Knowledge web design in Jacksonville, FL- business is busy as a bee.'
+    .video-cover
+    =render "shared/masthead"
+
+
+    -# ------   Navigation Menus    ---- #
+    =render "shared/main_nav"
     .off-canvas-wrap{ :'data-offcanvas' => true }
-      .fixed.off-canvas-fixed
-        %nav.tab-bar.hide-for-medium-up{ role: 'navigation' }
-          .left-small
-            =link_to('#', class: "left-off-canvas-toggle menu-icon", id: "expose_mobile_nav", role: 'button', :'aria-expanded' => false, :'aria-controls' => 'idOfMenu') do
-              %span
-          .right.tab-bar-section
-            %h2.title
-              Inherent Knowledge
-        %nav.left-off-canvas-menu.main_nav
-          %ul.off-canvas-list
-            %li
-              %label
-                Navigation
-            %li.item
-              =link_to root_path do
-                %i.icon-beehive
-                %label Home
-            %li.item
-              =link_to root_path do
-                %i.icon-happy-waiting-bee
-                %label Get a Quote
-            %li.item
-              =link_to root_path do
-                %i.icon-home
-                %label Pricing
-            %li.item
-              =link_to root_path do
-                %i.icon-home
-                %label Blog
-            %li.item
-              =link_to root_path do
-                %i.icon-home
-                %label Services
-            %li.item
-              =link_to root_path do
-                %i.icon-home
-                %label Portfolio
-      .inner-wrap
-        %a.exit-off-canvas
+      =render "shared/off_canvas_nav"
 
-        -# ----    Main Content    ---- #
-        %section.main-section
-          = yield
 
-    -# ----   Footer Section    ---- #
-    .row
-      %footer
-        .company-info{ itemscope: true, itemtype: "http://schema.org/Organization" }
-          .location-info
-            %span.company{ itemprop: "name"}
-              = company
-            %br
-            %span.street{ itemprop: "streetAddress"}
-              = APP_CONFIG['contact_address']
-            %span.suite
-              = APP_CONFIG['contact_suite']
-            %br
-            %span.city{ itemprop: "addressLocality"}
-              = APP_CONFIG['contact_city']
-            %span.state{ itemprop: "addressRegion"}
-              = APP_CONFIG['contact_state']
-            %span.postal
-              = APP_CONFIG['contact_postal']
-          .phone-info{ itemprop: "telephone"}
-            = APP_CONFIG['contact_phone']
-          .email-info{ itemprop: "email"}
-            =link_to APP_CONFIG['contact_email_sales'], "mailto:#{APP_CONFIG['contact_email_sales']} "
-        .webmaster
-          =link_to APP_CONFIG['contact_email_web'], "mailto:#{APP_CONFIG['contact_email_web']} "
-        .publication
-          Published:
-          %time{ pubdate: true, datetime: "2014-10-14" }
-            10/14/2014
-        .inh_kn_copy
-          = raw APP_CONFIG['inh_kn_copy']
+      -# ----    Main Content       ---- #
+      %section.main-section.inner-wrap
+        =yield
+
+
+    -# ------    Footer items       ---- #
+    =render "shared/footer"
     = javascript_include_tag "application"
+

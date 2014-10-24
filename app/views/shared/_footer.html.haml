@@ -1,0 +1,30 @@
+.row
+  %footer
+    .company-info{ itemscope: true, itemtype: "http://schema.org/Organization" }
+      .location-info
+        %span.company{ itemprop: "name"}
+          = company
+        %br
+        %span.street{ itemprop: "streetAddress"}
+          = APP_CONFIG['contact_address']
+        %span.suite
+          = APP_CONFIG['contact_suite']
+        %br
+        %span.city{ itemprop: "addressLocality"}
+          = APP_CONFIG['contact_city']
+        %span.state{ itemprop: "addressRegion"}
+          = APP_CONFIG['contact_state']
+        %span.postal
+          = APP_CONFIG['contact_postal']
+      .phone-info{ itemprop: "telephone"}
+        = APP_CONFIG['contact_phone']
+      .email-info{ itemprop: "email"}
+        =link_to APP_CONFIG['contact_email_sales'], "mailto:#{APP_CONFIG['contact_email_sales']} "
+    .webmaster
+      =link_to APP_CONFIG['contact_email_web'], "mailto:#{APP_CONFIG['contact_email_web']} "
+    .publication
+      Published:
+      %time{ pubdate: true, datetime: "2014-10-14" }
+        10/14/2014
+    .inh_kn_copy
+      = raw APP_CONFIG['inh_kn_copy']

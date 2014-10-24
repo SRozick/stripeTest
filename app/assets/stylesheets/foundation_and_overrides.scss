@@ -690,7 +690,7 @@ $select-hover-bg-color: scale-color($select-bg-color, $lightness: -3%);
 
 // We use these to style the icon-bar and items
 $include-html-icon-bar-classes: $include-html-classes;
-$icon-bar-bg: $oil;
+$icon-bar-bg: transparent;
 $icon-bar-font-color: $white;
 $icon-bar-font-size: 1rem;
 $icon-bar-hover-color: $primary-color;
