@@ -1,12 +1,14 @@
 require 'rspec-html-matchers'
 
-#TODO: Fix video background and poster
-#TODO: Video background overlay to improve menu visibility
-#TODO: Section content
+#TODO: Fix poster
 #TODO: <Not critical> Nav menu on main page that scrolls up and fixes to top, or expandable sidebar menu
-#TODO: Style and stub header and footer
-#TODO: Content for other sections
+#TODO: Style header and footer
+#TODO: Style content for other sections
 #TODO: Colorize and fonts
+#TODO: Create icon
+#TODO: Create favicon
+#TODO: Downward section nav
+#TODO: Check clean mobile display
 
 RSpec.describe "the Home page", mobile: true do
   before (:each) do
@@ -70,7 +72,10 @@ RSpec.describe "the Home page", mobile: true do
       end #mobile
       page.click_on('Home')
       expect(page).to have_http_status(:success)
-      expect(page).to have_content(/hello inherent knowledge/i)
+      expect(page).to have_content(/responsive design/i)
+      expect(page).to have_content(/e-Commerce/i)
+      expect(page).to have_content(/search engine optimization/i)
+      expect(page).to have_content(/social media marketing/i)
     end #case Home link
 
     it "links to contact page" do
