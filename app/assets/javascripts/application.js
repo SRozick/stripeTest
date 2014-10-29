@@ -9,13 +9,8 @@
 //
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
-//
-// Foundation files can be found at
-// /home/srozick/.rvm/gems/ruby-2.1.2@stripeTest/gems/foundation-rails-5.4.5.0/vendor/assets
-//
 //= require jquery
 //= require jquery_ujs
-//= require foundation
 //= require_tree .
 
 

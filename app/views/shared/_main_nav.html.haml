@@ -1,6 +1,15 @@
--# On-canvas
-%section.navigation-section.show-for-medium-up
-  .row
-    %nav
-      %ul.medium-12.columns.icon-bar.six-up{ :'aria-hidden' => true }
-        =render "shared/menu_items"
+-# On-canvas- larger screens
+%section.main-nav
+  %nav{ role: "navigation", :'aria-hidden' => true }
+    %ul.pull-left
+      =render "shared/menu_items"
+    .pull-right
+      %ul
+        =link_to root_path do
+          %li
+            -#%i.icon-bee-over-honeycomb
+            %label 555.555.5555
+        =link_to root_path do
+          %li
+            -#%i.icon-bee-over-honeycomb
+            %label example@email.com

@@ -45,6 +45,11 @@ module ApplicationHelper
     end #if
   end #title
 
-
+  def bkg_start(bkg_start = nil)
+    if bkg_start.present?
+      content_for :bkg_start, bkg_start
+    else content_for?(:bkg_start) ? content_for(:bkg_start) : ""
+    end
+  end #bkg_start
 
 end

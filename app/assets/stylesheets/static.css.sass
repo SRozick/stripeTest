@@ -5,34 +5,66 @@
 // TODO: Investigate usefulness of Data URI feature
 // See asset_data_uri helper for .erb files and the Rails asset pipeline at
 // http://guides.rubyonrails.org/asset_pipeline.html
-@import 'foundation_and_overrides'
-@import 'color_palette'
 
-#top-video
-  position:           fixed
-  right:              0
-  bottom:             0
-  min-width:          100%
-  min-height:         100%
+@import functions
+@import color_palette
+@import icon_font
+@import z_index
+// $background, background-overlay, $main-content, $modal, $drift-under
+
+label, i
+  cursor:             inherit
+
+.video-bkg-container
+  width: 100%
+  overflow: hidden
+
+
+.video-cover, #top-video
+  position:           absolute !important
+  right:              0px
+  bottom:             0px
   width:              auto
   height:             auto
-  z-index:            -10
+  min-width:          100%
+  min-height:         100%
+
+#top-video
+  z-index:            $background
 
 .video-cover
-  position:           absolute !important
-  top:                0
-  left:               0
-  min-height:         100vh
-  min-width:          100%
+  top:                0px
+  left:               0px
   background-color:   $sky_dark
-  opacity:            0.5
-  z-index:            -2
+  opacity:            0.7
+  z-index:            $background-overlay
 
-.intro-section
-  height:       100vh
+.main-nav
+  line-height: 1.5
+  position: relative
+  background: transparent
+  color: $white
+  padding: 15px
+  ul
+    list-style: none
 
-.navigation-section
-  background-color: $icon-bar-bg
+.container
+  display: inline-block
+  padding: 15px 5px
+  li
+    float: left
+    padding: 5px 15px
+  li:hover
+    background: black
+
+.pull-right
+  position: absolute
+  right: 30px
+  top: 8px
+
+
+
+
 
 .off-canvas-fixed
   // deals with behavior of fixed-off-canvas menu
@@ -73,8 +105,65 @@ ul.off-canvas-list li a
     top: rem-calc(-8px)
 
 #off-canvas-title
-  border-right:   $off-canvas-link-border-bottom
-  background-color: $off-canvas-label-bg
+  border-right:   black
+  background-color: black
 
   label
     top: 0.15rem
+
+
+#hexagon
+  width: 100px
+  height: 55px
+  background: red
+  position: relative
+  :before
+    content: ""
+    position: absolute
+    top: -25px
+    left: 0
+    width: 0
+    height: 0
+    border-left: 50px solid transparent
+    border-right: 50px solid transparent
+    border-bottom: 25px solid red
+  :after
+    content: ""
+    position: absolute
+    bottom: -25px
+    left: 0
+    width: 0
+    height: 0
+    border-left: 50px solid transparent
+    border-right: 50px solid transparent
+    border-top: 25px solid red
+
+
+// @media only screen
+
+// @media only screen and (max-width: 40rem)
+// // max-width 640px
+
+// // Medium screens
+// @media only screen and (min-width: 40.063rem)
+// // min-width 641px, medium screens */
+
+// @media only screen and (min-width: 40.063rem) and (max-width: 64rem)
+// // /* min-width 641px and max-width 1024px
+
+// // Large screens
+// @media only screen and (min-width: 64.063em)
+// // min-width 1025px, large screens */
+
+// @media only screen and (min-width: 64.063em) and (max-width: 90em)
+// // min-width 1025px and max-width 1440px, use when QAing large screen-only issues */
+
+// // XLarge screens
+// @media only screen and (min-width: 90.063em)
+// // min-width 1441px, xlarge screens */
+
+// @media only screen and (min-width: 90.063em) and (max-width: 120em)
+// //min-width 1441px and max-width 1920px, use when QAing xlarge screen-only issues */
+
+// // XXLarge screens
+// @media only screen and (min-width: 120.063em)
