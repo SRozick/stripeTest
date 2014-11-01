@@ -1,0 +1,70 @@
+@import functions
+@import color_palette
+@import z_index
+
+body
+  font-size:        100%
+
+body, h1, h2, h3, h4, h5, h6
+  font-size-adjust: 0.5         //SET THIS AS PER PRIMARY TYPEFACE, TEST IN FIREFOX ONLY
+
+#page
+  font-size:        1em         // 16px
+  line-height:      1.25        // 20px base
+
+h1
+  font-size:        2em         // 32px
+  line-height:      1.25        // 45px //todo: test if this can come out (#page)
+
+h2
+  font-size:        1.625em     // 26px
+  line-height:      1.15384615  // 30px
+
+h3
+  font-size:        1.375em     // 22px
+  line-height:      1.13636364  // 25px
+
+h4
+  font-size:        1.125em     // 18px
+  line-height:      1.11111111  // 20px
+
+blockquote
+  font-size:        1.25em      // 20px
+  line-height:      1.25        // 25px //todo: test if this can come out (#page)
+
+@media screen and (min-width: rem-calc(700px))
+  /* Typography- sizing and spacing rules: */
+  #page
+    font-size:      1em         // 16px
+    line-height:    1.375       // 22px
+  h1
+    font-size:      2.5em       // 40px
+    line-height:    1.125       // 45px
+
+  h2
+    font-size:      2em         // 32px
+    line-height:    1.25        // 40px
+
+  h3
+    font-size:      1.5em       // 24px
+    line-height:    1.25        // 30px
+
+  h4
+    line-height:    1.22222222  // 22px
+
+  blockquote
+    font-size:      1.5em       // 24px
+    line-height:    1.45833333  // 35px
+
+/* @media ultra-large-up */
+@media screen and (min-width: rem-calc(900px))
+  /* Typography- sizing and spacing rules: */
+  h1
+    font-size:      3em         // 48px
+    line-height:    1.041666667 // 50px
+
+  h2
+    font-size:      2.25em      //36px
+
+  h3
+    font-size:      1.75em      //28px

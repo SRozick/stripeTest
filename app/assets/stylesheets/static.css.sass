@@ -8,17 +8,20 @@
 
 @import functions
 @import color_palette
-@import icon_font
 @import z_index
+@import mixins
+// @import fonts
 // $background, background-overlay, $main-content, $modal, $drift-under
 
 label, i
   cursor:             inherit
 
+.row
+  position: relative
+
 .video-bkg-container
   width: 100%
   overflow: hidden
-
 
 .video-cover, #top-video
   position:           absolute !important
@@ -40,11 +43,10 @@ label, i
   z-index:            $background-overlay
 
 .main-nav
-  line-height: 1.5
+  +use-font("Sans")
   position: relative
   background: transparent
   color: $white
-  padding: 15px
   ul
     list-style: none
 
@@ -57,12 +59,34 @@ label, i
   li:hover
     background: black
 
+.pull-left
+  position: absolute
+  left: -45px
+
 .pull-right
   position: absolute
   right: 30px
   top: 8px
 
+.vid-overlay-content
+  +use-font("Baskerville")
+  min-height: 100vh
+  padding-top: 35vh
+  color: $white
+  h1
+    text-align: center
 
+.bottom_message
+  +use-font("Sans")
+  //padding-top: 30vh
+  text-align: center
+
+.pull-left .container li label, .pull-left .container i, .bottom-message
+  text-align: center
+
+.pull-left .container li i
+  display: block
+  font-size: 2rem
 
 
 

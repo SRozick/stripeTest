@@ -1,0 +1,33 @@
+$baskerville: "Libre Baskerville", "Baskerville", "Baskerville Old Face", "Hoefler Text", "Garamond", "Times New Roman",serif
+$sans: Open Sans, "Arial", "Helvetica", sans-serif
+
+=use-font($font, $weight: 400, $style: normal, $variant: normal)
+  @if $font == "Libre Baskerville"
+    $font: $baskerville
+  @else if $font == "Baskerville"
+    $font: $baskerville
+  @else if $font == "Open Sans"
+    $font: $sans
+  @else if $font == "Sans"
+    $font: $sans
+  @else
+    $font: sans-serif
+
+  font-family: $font
+  font-style: $style
+  font-variant: $variant
+  font-weight: $weight
+
+=link-style($color)
+  a:link
+  color: $color
+  //background-color: #00FFFF
+  a:visited
+  color: $color
+  //background-color: #33FFFF
+  a:hover
+  color: $color
+  //background-color: #00FFFF
+  a:active
+  color: $color
+  //background-color: #00FFFF
